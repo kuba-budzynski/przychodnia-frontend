@@ -1,8 +1,9 @@
 import logo from '../public/logo.svg'
+import patterns from '../styles/patterns.module.scss'
 
 export default function Example() {
   return (
-    <div className="min-h-screen min-w-full bg-coolGray-50 flex flex-col justify-center mt-8">
+    <div className={`min-h-screen min-w-full flex flex-col justify-center mt-8 ${patterns.pattern}`}>
         <div className="relative w-11/12 xl:w-full h-full max-w-full xl:max-w-6xl xxl:max-w-screen-2xl mx-auto flex flex-col justify-center">
             <div className="absolute inset-0 -mr-0 bg-gradient-to-r from-indigo-100 to-fuchsia-600 shadow-lg transform skew-y-0 rotate-3 rounded-3xl"></div>
             <div className="relative h-full shadow-xl rounded-3xl w-full bg-white flex" style={{maxHeight: "75vh", height: "100vh"}}>

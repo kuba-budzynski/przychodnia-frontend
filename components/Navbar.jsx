@@ -1,4 +1,5 @@
 import { Fragment, useEffect } from 'react'
+import Link from 'next/link'
 import { Popover, Transition } from '@headlessui/react'
 import {
   BookmarkAltIcon,
@@ -130,14 +131,16 @@ export default function Example() {
           <div className="max-w-8xl mx-auto px-4 sm:px-6">
             <div className="flex justify-between items-center border-b-2 border-gray-100 py-3 md:justify-start md:space-x-10">
               <div className="flex justify-start lg:w-0 lg:flex-1">
-                <a href="#">
-                  <span className="sr-only">Workflow</span>
-                  <img
-                    className="h-8 w-auto sm:h-10"
-                    src={logo}
-                    alt=""
-                  />
-                </a>
+                <Link href="/" prefetch={false}>
+                  <a>
+                    <span className="sr-only">Workflow</span>
+                    <img
+                      className="h-8 w-auto sm:h-10"
+                      src={logo}
+                      alt=""
+                    />
+                  </a>
+                </Link>
               </div>
               <div className="-mr-2 -my-2 md:hidden">
                 <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -215,12 +218,16 @@ export default function Example() {
                   )}
                 </Popover>
 
-                <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                  Pricing
+                <Link href="/faq" prefetch={false}>
+                  <a className="text-base font-medium text-gray-500 hover:text-gray-900">
+                    FAQ
+                  </a>
+                </Link>
+               <Link href="/regulamin" prefetch={false}>
+                <a className="text-base font-medium text-gray-500 hover:text-gray-900">
+                  Regulamin
                 </a>
-                <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                  Docs
-                </a>
+               </Link>
 
                 <Popover className="relative">
                   {({ open }) => (
@@ -363,13 +370,17 @@ export default function Example() {
                 </div>
                 <div className="py-6 px-5 space-y-6">
                   <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                    <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                      Pricing
-                    </a>
+                    <Link href="/faq" prefetch={false}>
+                      <a  className="text-base font-medium text-gray-900 hover:text-gray-700">
+                        FAQ
+                      </a>
+                    </Link>
 
-                    <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                      Docs
-                    </a>
+                    <Link href="/regulamin">
+                      <a className="text-base font-medium text-gray-900 hover:text-gray-700">
+                        Docs
+                      </a>
+                    </Link>
                     {resources.map((item) => (
                       <a
                         key={item.name}

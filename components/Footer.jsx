@@ -52,9 +52,9 @@ function Footer() {
                     <div className="flex flex-col justify-center justify-items-center mx-auto">
                         <h1 className="text-2xl leading-5 font-extrabold tracking-widest text-coolGray-200 uppercase mb-3 text-center mt-8 lg:mt-0">Menu</h1>
                         <ul className="mt-4 text-center">
-                            <li className="mt-4"><Link href="/" prefetch={false}><a className="text-base leading-6 text-gray-300 hover:text-gray-400">Link #1</a></Link></li>
-                            <li className="mt-4"><Link href="/" prefetch={false}><a className="text-base leading-6 text-gray-300 hover:text-gray-400">Link #2</a></Link></li>
-                            <li className="mt-4"><Link href="/" prefetch={false}><a className="text-base leading-6 text-gray-300 hover:text-gray-400">Link #3</a></Link></li>
+                            <li className="mt-4"><Link href="/" prefetch={false}><a className="text-base leading-6 text-gray-300 hover:text-gray-400">Home</a></Link></li>
+                            <li className="mt-4"><Link href="/faq" prefetch={false}><a className="text-base leading-6 text-gray-300 hover:text-gray-400">FAQ</a></Link></li>
+                            <li className="mt-4"><Link href="/regulamin" prefetch={false}><a className="text-base leading-6 text-gray-300 hover:text-gray-400">Regulamin</a></Link></li>
                             <li className="mt-4"><Link href="/" prefetch={false}><a className="text-base leading-6 text-gray-300 hover:text-gray-400">Link #4</a></Link></li>
                             <li className="mt-4"><Link href="/" prefetch={false}><a className="text-base leading-6 text-gray-300 hover:text-gray-400">Link #5</a></Link></li>
                             <li className="mt-4"><Link href="/" prefetch={false}><a className="text-base leading-6 text-gray-300 hover:text-gray-400">Link #6</a></Link></li>
