@@ -10,7 +10,7 @@ const TimeLine = () => {
     return (
         <section className="w-full h-full">
             <div className="w-11/12 lg:w-5/6 max-w-6xl mx-auto">
-                <h1 className="text-center text-blue-500 text-4xl lg:text-5xl font-bold mb-10 xl:mb-16">Zobacz co mamy do zaoferowania</h1>
+                <h1 className=" mt-20 text-center text-blue-500 text-4xl lg:text-5xl font-bold mb-10 xl:mb-16">Zobacz co mamy do zaoferowania</h1>
                 <VerticalTimeline animate={mini}>
                     <VerticalTimelineElement
                         className="vertical-timeline-element--work"

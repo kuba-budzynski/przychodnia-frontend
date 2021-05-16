@@ -23,7 +23,7 @@ function faq({faqs}) {
                     <div className="w-4/5 mx-auto lg:mx-0 lg:ml-auto">
                         <h1 className="text-6xl font-bold text-center text-blue-600">Często zadawane Nam pytania</h1>
                         <h3 className="text-gray-400 text-center italic py-8 text-xl">Stresuje Cię wizyta? Masz jakieś ciekawe pytania dotyczące działania placówki? Szukasz inspiracji?</h3>
-                        <h4 className="text-blue-500 text-3xl text-center font-bold">Zobacz czy pytania poniżej zaspokoją Twoją ciekawość?</h4>
+                        <h4 className="text-blue-500 text-3xl text-center font-bold">Zobacz czy pytania poniżej zaspokoją Twoją ciekawość</h4>
                         <div className="mt-16 mx-auto text-center">
                             <bottom type="button" className="text-center mx-auto flex items-center justify-center w-16 h-16 rounded-full bg-cool-gray-100 text-blue-500 animate-bounce hover:text-blue-600 hover:bg-cool-gray-50 transition duration-300 ease-in-out cursor-pointer">
                                 <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -40,7 +40,7 @@ function faq({faqs}) {
             <main className="w-screen max-w-full py-32 ">
                 <section className="w-full px-4 space-y-4" id="faqs">
                     {faqs.map(faq => 
-                        <Disclosure>
+                        <Disclosure id={faq.id}>
                             {({ open }) => (
                                 <div className="max-w-5xl mx-auto my-3 px-4">
                                     <Disclosure.Button className="flex justify-between items-center w-full px-5 py-3 shadow-sm text-base font-medium text-left text-indigo-500 bg-indigo-50 rounded-lg hover:bg-indigo-100 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">

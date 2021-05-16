@@ -10,6 +10,9 @@ import TimeLine from '../components/Timeline'
 import patterns from '../styles/patterns.module.scss'
 import doctorsRoom from '../public/doctorRoom.jpg'
 
+import Lottie from "lottie-react";
+import covid from "../public/animations/covid.json";
+
 export default function Home() {
   return (
     <div className="w-screen max-w-full min-h-screen">
@@ -24,12 +27,22 @@ export default function Home() {
         <Hero/>
       </div>
 
-      <div className="shadow-sm">
+      <div className="shadow-md">
         <CallToAction/>
       </div>
 
-      <div className="my-12">
+      <div className="mt-32 mb-16">
         <Features />
+      </div>
+
+      <div className="w-full h-full max-w-8xl mx-auto flex flex-col lg:flex-row lg:space-x-6 my-16">
+        <div className="w-full h-full lg:w-1/2">
+            <Lottie animationData={covid} />
+        </div>
+        <div className="w-full h-full lg:w-1/2 my-auto px-4 lg:px-8">
+            <h2 className="text-indigo-500 leading-tight font-bold tracking-wide text-5xl text-center">Pracujemy dla Was w dobie pandemii <span className="text-rose-400 font-extrabold">COVID-19</span></h2>
+            <h4 className="mt-6 text-gray-500 text-2xl text-center"><span className="text-indigo-500 font-bold text-center">Bezpieczeństwo!</span> - wszystkie zalecenia Ministerstwa Zdrowia są przez Nas zachowywane. Należy wypełnić odpowiednie ankiety oraz zastosować zalecane elementy ochrony osobistej takich jak np. maski lub przyłbice</h4>
+        </div>
       </div>
 
       <div className={`${patterns.lines} py-12 shadow-md`}>
