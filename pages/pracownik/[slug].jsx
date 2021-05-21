@@ -14,7 +14,7 @@ export default function Worker({doctor}) {
 
           <Navbar />
     
-          <main className="min-h-screen w-screen max-w-full bg-coolGray-50 ">
+          <main className="min-h-screen w-screen max-w-full bg-coolGray-50">
               <div className="max-w-7xl mx-auto py-36 flex flex-col lg:flex-row lg:space-x-6">
                  <div className="w-full lg:w-1/3">
                   <img src={doctor.profile.url} className="w-full h-auto object-cover object-center lg:rounded-xl"></img>
