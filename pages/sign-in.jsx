@@ -10,7 +10,7 @@ import login2 from '../public/login2.svg'
 import hospital from '../public/hospital4.svg'
 import { useRouter } from 'next/router';
 import Link from 'next/link'
-
+import { store } from 'react-notifications-component';
 import patterns from '../styles/patterns.module.scss'
 
 import server from '../public/server.svg'
@@ -26,17 +26,42 @@ function signin() {
                 email: values.email,
                 password: values.password,
             }
-            const res = await axios.post(process.env.BACKEND + "/auth/login/", data)   
-            if(res.data.success){
-               auth.setToken(res.data.data.token)
-               router.push('/upload')
-            }
-            else{
-                alert("Not logged in")
-            }
+            
+            // TODO LOGIN IMPLEMENTATION
+
+            store.addNotification({
+                title: "Successful login",
+                message: `Welcome back ${values.email}`,
+                type: "success",
+                insert: "top",
+                container: "bottom-center",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 7500,
+                    onScreen: true
+                }
+            });
+            router.push("/")
+
             resetForm({})
             setStatus({ success: true })
         } catch (error) {
+
+            store.addNotification({
+                title: "Error",
+                message: "Check some field in a form",
+                type: "danger",
+                insert: "top",
+                container: "bottom-center",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 5000,
+                    onScreen: true
+                }
+            });
+
             setStatus({ success: false })
             setSubmitting(false)
             setErrors({ submit: error.message })
