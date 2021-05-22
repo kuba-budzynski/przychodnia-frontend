@@ -15,9 +15,12 @@ import {
   ViewGridIcon,
   XIcon,
 } from '@heroicons/react/outline'
+
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import styles from '../styles/Navbar.module.css'
 import logo from '../public/logo.svg'
+import { useUser } from '@auth0/nextjs-auth0';
+import AvatarDropdown from './AvatarDropdown'
 
 const solutions = [
   {
@@ -82,6 +85,8 @@ function classNames(...classes) {
 }
 
 export default function Example() {
+
+    const { user, error, isLoading } = useUser();
 
     useEffect(() => {
         const doc = document.documentElement;
@@ -308,21 +313,61 @@ export default function Example() {
                 </Popover>
               </Popover.Group>
               <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-               <Link href="/sign-in">
-                <a  className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
-                    Sign in
+               
+               {!user ? 
+                <Link href="/api/auth/login">
+                  <a className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-500 hover:bg-indigo-600">
+                    Login or Register
                   </a>
-               </Link>
-               <Link href="/sign-up">
-                <a
-                    className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-500 hover:bg-indigo-600"
-                  >
-                    Sign up
-                  </a>
-               </Link>
+               </Link>:
+               <div className="flex flex-row space-x-5">
+                  {/* <div className="h-10 w-10 self-center">
+                    <Link href="/profile">
+                      <img className="inline-block w-full h-full object-cover rounded-full shadow-xl cursor-pointer ring-2 ring-white" src={user.picture}></img>
+                    </Link>
+                  </div> */}
+                  <AvatarDropdown profileURL={user.picture} name={user.name} />
+                  {/* <Link href="/api/auth/logout">
+                      <a className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-500 hover:bg-indigo-600">
+                        Logout
+                      </a>
+                  </Link> */}
+               </div>
+               }
+               
               </div>
             </div>
           </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
           <Transition
             show={open}

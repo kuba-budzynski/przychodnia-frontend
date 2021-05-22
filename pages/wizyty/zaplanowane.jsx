@@ -1,23 +1,23 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
+import Navbar from '../../components/Navbar'
+import Footer from '../../components/Footer'
 import Head from 'next/head'
-import { ErrorMessage } from '../components/utils'
+import { ErrorMessage } from '../../components/utils'
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import axios from "axios";
-import login2 from '../public/login2.svg'
-import hospital from '../public/hospital4.svg'
+import hospital from '../../public/hospital4.svg'
 import { useRouter } from 'next/router';
 import Link from 'next/link'
 import { store } from 'react-notifications-component';
-import patterns from '../styles/patterns.module.scss'
+import patterns from '../../styles/patterns.module.scss'
 
-import server from '../public/server.svg'
-import padlock from '../public/padlock2.svg'
-import cypher from '../public/cyphers.svg'
+import server from '../../public/server.svg'
+import padlock from '../../public/padlock2.svg'
+import cypher from '../../public/cyphers.svg'
 
-function signin() {
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+
+function zaplanowane() {
 
     const router = useRouter()
     const onSubmit = async (values, { setSubmitting, setErrors, setStatus, resetForm }) => {
@@ -86,7 +86,7 @@ function signin() {
     return (
         <div className="bg-coolGray-50 ">
             <Head>
-                <title>Strona logowania</title>
+                <title>Zaplanowane wizyty</title>
                 <meta name="description" content="Opis..." />
             </Head>
 
@@ -192,4 +192,4 @@ function signin() {
     )
 }
 
-export default signin
+export default withPageAuthRequired(zaplanowane)

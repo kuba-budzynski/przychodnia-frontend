@@ -19,7 +19,7 @@ function faq({faqs}) {
 
             <Navbar />
             <div className="w-full h-full lg:mt-0 flex flex-col-reverse py-12 lg:py-0 lg:flex-row bg-indigo-50 max-h-screen shadow-lg">
-                <div className="w-full lg:w-1/3 my-auto">
+                <div className="w-full lg:w-1/3 my-auto pt-24">
                     <div className="w-4/5 mx-auto lg:mx-0 lg:ml-auto">
                         <h1 className="text-6xl font-bold text-center text-blue-600">Często zadawane Nam pytania</h1>
                         <h3 className="text-gray-400 text-center italic py-8 text-xl">Stresuje Cię wizyta? Masz jakieś ciekawe pytania dotyczące działania placówki? Szukasz inspiracji?</h3>

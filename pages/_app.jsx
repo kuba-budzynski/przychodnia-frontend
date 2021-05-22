@@ -2,12 +2,15 @@ import '../styles/globals.css'
 import 'react-vertical-timeline-component/style.min.css';
 import 'react-notifications-component/dist/theme.css'
 import ReactNotification from 'react-notifications-component'
+import { UserProvider } from '@auth0/nextjs-auth0';
 
 function MyApp({ Component, pageProps }) {
   return(
     <div className="app-container">
-      <ReactNotification />
-      <Component {...pageProps} />
+      <UserProvider>
+        <ReactNotification />
+        <Component {...pageProps} />
+      </UserProvider>
     </div>
   )
 }

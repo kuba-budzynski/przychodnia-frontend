@@ -1,23 +1,23 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
+import Navbar from '../../components/Navbar'
+import Footer from '../../components/Footer'
 import Head from 'next/head'
-import { ErrorMessage } from '../components/utils'
+import { ErrorMessage } from '../../components/utils'
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import axios from "axios";
-import login2 from '../public/login2.svg'
-import hospital from '../public/hospital4.svg'
+import hospital from '../../public/hospital4.svg'
 import { useRouter } from 'next/router';
 import Link from 'next/link'
+import { store } from 'react-notifications-component';
+import patterns from '../../styles/patterns.module.scss'
 
-import patterns from '../styles/patterns.module.scss'
+import server from '../../public/server.svg'
+import padlock from '../../public/padlock2.svg'
+import cypher from '../../public/cyphers.svg'
 
-import server from '../public/server.svg'
-import padlock from '../public/padlock2.svg'
-import cypher from '../public/cyphers.svg'
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
-function signup() {
+function historia() {
 
     const router = useRouter()
     const onSubmit = async (values, { setSubmitting, setErrors, setStatus, resetForm }) => {
@@ -26,17 +26,42 @@ function signup() {
                 email: values.email,
                 password: values.password,
             }
-            const res = await axios.post(process.env.BACKEND + "/auth/login/", data)   
-            if(res.data.success){
-               auth.setToken(res.data.data.token)
-               router.push('/upload')
-            }
-            else{
-                alert("Not logged in")
-            }
+            
+            // TODO LOGIN IMPLEMENTATION
+
+            store.addNotification({
+                title: "Successful login",
+                message: `Welcome back ${values.email}`,
+                type: "success",
+                insert: "top",
+                container: "bottom-center",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 7500,
+                    onScreen: true
+                }
+            });
+            router.push("/")
+
             resetForm({})
             setStatus({ success: true })
         } catch (error) {
+
+            store.addNotification({
+                title: "Error",
+                message: "Check some field in a form",
+                type: "danger",
+                insert: "top",
+                container: "bottom-center",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 5000,
+                    onScreen: true
+                }
+            });
+
             setStatus({ success: false })
             setSubmitting(false)
             setErrors({ submit: error.message })
@@ -61,12 +86,12 @@ function signup() {
     return (
         <div className="bg-coolGray-50 ">
             <Head>
-                <title>Strona rejestracji</title>
+                <title>Historia wizyt</title>
                 <meta name="description" content="Opis..." />
             </Head>
 
             <Navbar />
-            <main className={`w-screen max-w-full xl:py-28 xxxl:py-48 min-h-screen xxl:min-h-0 ${patterns.paper}`}>
+            <main className={`w-screen max-w-full xl:py-28 xxxl:py-48 min-h-screen xxl:min-h-0 ${patterns.lines2}`}>
                 <div className="box-border xl:pt-16 w-full">
                 <div className="w-full xl:w-10/12 mx-auto flex flex-col-reverse xl:flex-row">
                         <div className="px-8 xl:px-4 w-full xl:w-1/2 mx-auto my-auto" id="form">
@@ -80,9 +105,9 @@ function signup() {
                                                     formik.handleSubmit();
                                             }}>
                                             <div className="mb-4">
-                                                <div className="flex px-4 bg-indigo-50 rounded-md">
+                                                <div className="flex px-4 bg-white rounded-md">
                                                     <input
-                                                        className="w-full py-4 text-xs placeholder-gray-400 font-semibold leading-none bg-indigo-50 outline-none"
+                                                        className="w-full py-4 text-xs placeholder-gray-400 font-semibold leading-none bg-white outline-none"
                                                         type="email" placeholder="Podaj swój email" name="email" required value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                                                     <svg className="h-6 w-6 ml-4 my-auto text-gray-300"
                                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -94,9 +119,9 @@ function signup() {
                                                 {formik.touched.email && formik.errors.email ? <ErrorMessage msg={formik.errors.email} /> : null}
                                             </div>
                                             <div className="mb-6">
-                                                <div className="flex px-4 bg-indigo-50 rounded-md">
+                                                <div className="flex px-4 bg-white rounded-md">
                                                     <input
-                                                        className="w-full py-4 text-xs placeholder-gray-400 font-semibold leading-none bg-indigo-50 outline-none"
+                                                        className="w-full py-4 text-xs placeholder-gray-400 font-semibold leading-none bg-white outline-none"
                                                         type="password" placeholder="Podaj swoje hasło" name="password" required value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
                                                     <button className="ml-4">
                                                         <svg className="h-6 w-6 my-auto text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -167,4 +192,4 @@ function signup() {
     )
 }
 
-export default signup
+export default withPageAuthRequired(historia)

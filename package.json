@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^1.3.1",
     "@bitty/format-date": "^1.2.1",
     "@brainhubeu/react-carousel": "^2.0.3",
     "@emotion/core": "^11.0.0",
@@ -38,6 +39,7 @@
     "react-query": "^3.16.0",
     "react-vertical-timeline-component": "^3.3.3",
     "sass": "^1.32.13",
+    "smart-truncate": "^1.0.1",
     "swr": "^0.5.6",
     "use-media": "^1.4.0",
     "voca": "^1.4.0",
