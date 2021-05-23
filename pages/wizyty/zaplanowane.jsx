@@ -11,9 +11,10 @@ import Link from 'next/link'
 import { store } from 'react-notifications-component';
 import patterns from '../../styles/patterns.module.scss'
 
-import server from '../../public/server.svg'
+import mask from '../../public/mask.svg'
 import padlock from '../../public/padlock2.svg'
-import cypher from '../../public/cyphers.svg'
+import clock from '../../public/clock.svg'
+import star from '../../public/star.svg'
 
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
@@ -160,13 +161,13 @@ function zaplanowane() {
                 </div>
             </main>
 
-            <div className="w-full py-32 bg-indigo-400">
+            <div className="w-full py-24 bg-indigo-400">
                <div className="w-full max-w-7xl mx-auto xl:space-x-6 flex flex-col xl:flex-row px-4 xl:px-0">
                 <div className="w-full xl:w-1/2 mx-auto">
-                        <img src={server} className="w-full h-full mx-auto"></img>
+                        <img src={mask} className="w-3/4 h-full mx-auto"></img>
                 </div>   
                 <div className="w-full xl:w-1/2 mx-auto flex flex-col">
-                    <h1 className="text-3xl xl:text-5xl font-bold text-white text-center">Twoje dane bezpiecznie spoczywają na Naszych serwerach</h1>
+                    <h1 className="text-3xl xl:text-5xl font-bold text-white text-center">1. Przygotuj środki ochrony osobistej zgodnych z ustawą np. maskę</h1>
                     <p className="text-white text-base px-6 text-justify pt-8">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent congue nunc non mollis ultrices. Curabitur cursus luctus lacus, id sagittis leo. Donec ultrices auctor erat ut gravida. Cras ut varius augue, nec aliquet lectus. Proin elementum ex nec iaculis ullamcorper. Aliquam facilisis felis at purus rutrum sodales. Aenean congue ligula sit amet egestas malesuada. Nulla ut ipsum libero. Morbi tristique dolor leo, in euismod turpis ultrices sed. Aliquam erat volutpat. Suspendisse iaculis hendrerit nulla, et accumsan erat tempus ac.
                     </p>
@@ -177,16 +178,31 @@ function zaplanowane() {
             <div className="w-full py-32">
                <div className="w-full max-w-7xl mx-auto xl:space-x-10 flex flex-col xl:flex-row-reverse px-4 xl:px-0">
                 <div className="w-full xl:w-1/2 mx-auto">
-                        <img src={cypher} className="w-full h-full mx-auto px-4"></img>
+                        <img src={clock} className="w-2/3 h-full mx-auto px-4"></img>
                 </div>   
                 <div className="w-full xl:w-1/2 mx-auto flex flex-col">
-                    <h1 className="text-3xl xl:text-5xl font-bold text-indigo-400 text-center">Używamy najnowosze metody szyfrowania oraz bezpieczeństwa</h1>
+                    <h1 className="text-3xl xl:text-5xl font-bold text-indigo-400 text-center">2. Przyjdź na wizytę punktualnie - działamy jak szwajcarski zegarek</h1>
                     <p className="text-gray-400 text-base px-6 text-justify pt-8">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent congue nunc non mollis ultrices. Curabitur cursus luctus lacus, id sagittis leo. Donec ultrices auctor erat ut gravida. Cras ut varius augue, nec aliquet lectus. Proin elementum ex nec iaculis ullamcorper. Aliquam facilisis felis at purus rutrum sodales. Aenean congue ligula sit amet egestas malesuada. Nulla ut ipsum libero. Morbi tristique dolor leo, in euismod turpis ultrices sed. Aliquam erat volutpat. Suspendisse iaculis hendrerit nulla, et accumsan erat tempus ac.
                     </p>
                 </div>  
                </div>                      
             </div>
+
+            <div className="w-full py-24 bg-indigo-400">
+               <div className="w-full max-w-7xl mx-auto xl:space-x-6 flex flex-col xl:flex-row px-4 xl:px-0">
+                <div className="w-full xl:w-1/2 mx-auto">
+                        <img src={star} className="w-2/3 h-full mx-auto"></img>
+                </div>   
+                <div className="w-full xl:w-1/2 mx-auto flex flex-col">
+                    <h1 className="text-3xl xl:text-5xl font-bold text-white text-center">3. Zostaw Nam opinię - zawsze staramy się poprawić Nasze usługi</h1>
+                    <p className="text-white text-base px-6 text-justify pt-8">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent congue nunc non mollis ultrices. Curabitur cursus luctus lacus, id sagittis leo. Donec ultrices auctor erat ut gravida. Cras ut varius augue, nec aliquet lectus. Proin elementum ex nec iaculis ullamcorper. Aliquam facilisis felis at purus rutrum sodales. Aenean congue ligula sit amet egestas malesuada. Nulla ut ipsum libero. Morbi tristique dolor leo, in euismod turpis ultrices sed. Aliquam erat volutpat. Suspendisse iaculis hendrerit nulla, et accumsan erat tempus ac.
+                    </p>
+                </div>  
+               </div>                      
+            </div>
+
             <Footer />
         </div>
     )

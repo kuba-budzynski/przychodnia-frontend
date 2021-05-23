@@ -64,8 +64,8 @@ function AvatarDropdown({profileURL, name}) {
                             <div className="relative bg-white p-5 flex flex-col space-y-3">
                                 {solutions.map((item) => (
                                 <Link href={item.href} key={item.name}>
-                                    <a className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
-                                        <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 text-white bg-indigo-400 hover:bg-indigo-500 rounded-xl">
+                                    <a className="group flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
+                                        <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 text-white bg-indigo-400 group-hover:bg-indigo-500 rounded-xl">
                                             <item.icon className="w-6 h-6 text-white"></item.icon>
                                         </div>
                                         <div className="ml-4">
@@ -80,10 +80,10 @@ function AvatarDropdown({profileURL, name}) {
                                 </Link>
                                 ))}
                             </div>
-                            <div className="px-4 py-2 bg-gray-50">
+                            <div className="px-4 py-1 bg-gray-50">
                                 <Link href="/api/auth/logout">
                                     <a className="flow-root px-2 py-1 transition duration-150 ease-in-out rounded-md hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
-                                        <span className="block text-xl text-center font-bold text-rose-500">
+                                        <span className="block text-lg text-center font-bold text-red-500">
                                             Logout
                                         </span>
                                     </a>

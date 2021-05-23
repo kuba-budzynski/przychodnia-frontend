@@ -47,7 +47,7 @@ function faq({faqs}) {
                                         <ReactMarkdown>{faq.question}</ReactMarkdown>
                                         <ChevronUpIcon
                                         className={`${
-                                            open ? 'transform rotate-180' : ''
+                                            !open ? 'transform rotate-180' : ''
                                         } w-8 h-8 text-indigo-500`}
                                         />
                                     </Disclosure.Button>

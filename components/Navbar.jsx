@@ -21,6 +21,14 @@ import styles from '../styles/Navbar.module.css'
 import logo from '../public/logo.svg'
 import { useUser } from '@auth0/nextjs-auth0';
 import AvatarDropdown from './AvatarDropdown'
+import {Loader} from '../components/utils'
+import styled from '../styles/scrollbar.module.scss'
+import {client} from '../graphql/utils'
+import useSWR from 'swr'
+import Worker from '../components/Worker'
+import _ from 'lodash'
+
+const fetcher = query => client.request(query)
 
 const solutions = [
   {
@@ -48,6 +56,7 @@ const solutions = [
     href: '#',
     icon: RefreshIcon,
   },
+  
 ]
 const callsToAction = [
   { name: 'Watch Demo', href: '#', icon: PlayIcon },
@@ -73,11 +82,25 @@ const resources = [
     icon: CalendarIcon,
   },
   { name: 'Security', description: 'Understand how we take your privacy seriously.', href: '#', icon: ShieldCheckIcon },
-]
-const recentPosts = [
-  { id: 1, name: 'Boost your conversion rate', href: '#' },
-  { id: 2, name: 'How to use search engine optimization to drive traffic to your site', href: '#' },
-  { id: 3, name: 'Improve your customer experience', href: '#' },
+  {
+    name: 'Help Center',
+    description: 'Get all of your questions answered in our forums or contact support.',
+    href: '#',
+    icon: SupportIcon,
+  },
+  {
+    name: 'Guides',
+    description: 'Learn how to maximize our platform to get the most out of it.',
+    href: '#',
+    icon: BookmarkAltIcon,
+  },
+  {
+    name: 'Events',
+    description: 'See what meet-ups and other events we might be planning near you.',
+    href: '#',
+    icon: CalendarIcon,
+  },
+  { name: 'Security', description: 'Understand how we take your privacy seriously.', href: '#', icon: ShieldCheckIcon },
 ]
 
 function classNames(...classes) {
@@ -86,7 +109,21 @@ function classNames(...classes) {
 
 export default function Example() {
 
-    const { user, error, isLoading } = useUser();
+    const { user } = useUser();
+    const {data, error} = useSWR(
+      `query MyQuery {
+        doctors {
+          name
+          surname
+          title
+          slug
+          profile {
+            url
+          }
+          specializations
+        }
+      }`, fetcher
+    )
 
     useEffect(() => {
         const doc = document.documentElement;
@@ -234,7 +271,40 @@ export default function Example() {
                 </a>
                </Link>
 
-                <Popover className="relative">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <Popover className="relative max-h-96">
                   {({ open }) => (
                     <>
                       <Popover.Button
@@ -243,7 +313,7 @@ export default function Example() {
                           'group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
                         )}
                       >
-                        <span>More</span>
+                        <span>Pracownicy</span>
                         <ChevronDownIcon
                           className={classNames(
                             open ? 'text-gray-600' : 'text-gray-400',
@@ -263,47 +333,15 @@ export default function Example() {
                         leaveFrom="opacity-100 translate-y-0"
                         leaveTo="opacity-0 translate-y-1"
                       >
-                        <Popover.Panel
-                          static
-                          className="absolute z-10 left-1/2 transform -translate-x-1/2 mt-3 px-2 w-screen max-w-md sm:px-0"
-                        >
-                          <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
-                            <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                              {resources.map((item) => (
-                                <a
-                                  key={item.name}
-                                  href={item.href}
-                                  className="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50"
-                                >
-                                  <item.icon className="flex-shrink-0 h-6 w-6 text-indigo-600" aria-hidden="true" />
-                                  <div className="ml-4">
-                                    <p className="text-base font-medium text-gray-900">{item.name}</p>
-                                    <p className="mt-1 text-sm text-gray-500">{item.description}</p>
+                        <Popover.Panel className="absolute z-10 left-1/2 transform -translate-x-1/2 mt-3 px-2 w-screen max-w-md sm:px-0 ">
+                          <div className="rounded-lg shadow-lg ring-2 ring-black ring-opacity-5 ">
+                            <div className={`relative flex flex-col bg-white p-2 overflow-y-scroll max-h-128 ${styled.scrollbar} divide-y-2 divide-gray-100`}>
+                              {!data || error ? <div className="w-full h-16 mx-auto"><Loader color="text-indigo-500"></Loader></div>:
+                                _.orderBy(data.doctors, 'surname', 'asc').map(doctor => (
+                                  <div className="py-2">
+                                    <Worker doctor={doctor} />
                                   </div>
-                                </a>
-                              ))}
-                            </div>
-                            <div className="px-5 py-5 bg-gray-50 sm:px-8 sm:py-8">
-                              <div>
-                                <h3 className="text-sm tracking-wide font-medium text-gray-500 uppercase">
-                                  Recent Posts
-                                </h3>
-                                <ul className="mt-4 space-y-4">
-                                  {recentPosts.map((post) => (
-                                    <li key={post.id} className="text-base truncate">
-                                      <a href={post.href} className="font-medium text-gray-900 hover:text-gray-700">
-                                        {post.name}
-                                      </a>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                              <div className="mt-5 text-sm">
-                                <a href="#" className="font-medium text-indigo-500 hover:text-indigo-600">
-                                  {' '}
-                                  View all posts <span aria-hidden="true">&rarr;</span>
-                                </a>
-                              </div>
+                                ))}      
                             </div>
                           </div>
                         </Popover.Panel>
@@ -315,26 +353,14 @@ export default function Example() {
               <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
                
                {!user ? 
-                <Link href="/api/auth/login">
-                  <a className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-500 hover:bg-indigo-600">
-                    Login or Register
-                  </a>
-               </Link>:
-               <div className="flex flex-row space-x-5">
-                  {/* <div className="h-10 w-10 self-center">
-                    <Link href="/profile">
-                      <img className="inline-block w-full h-full object-cover rounded-full shadow-xl cursor-pointer ring-2 ring-white" src={user.picture}></img>
-                    </Link>
-                  </div> */}
+                  <Link href="/api/auth/login">
+                    <a className="whitespace-nowrap inline-flex items-center justify-center px-6 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-500 hover:bg-indigo-600">
+                      Login  /  Register
+                    </a>
+                  </Link>:
                   <AvatarDropdown profileURL={user.picture} name={user.name} />
-                  {/* <Link href="/api/auth/logout">
-                      <a className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-500 hover:bg-indigo-600">
-                        Logout
-                      </a>
-                  </Link> */}
-               </div>
                }
-               
+            
               </div>
             </div>
           </div>
