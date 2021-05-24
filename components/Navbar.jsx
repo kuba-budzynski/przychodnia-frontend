@@ -119,6 +119,9 @@ export default function Example() {
           slug
           profile {
             url
+            width
+            height
+            handle
           }
           specializations
         }

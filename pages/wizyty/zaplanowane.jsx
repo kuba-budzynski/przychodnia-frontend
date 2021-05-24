@@ -20,69 +20,44 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
 function zaplanowane() {
 
-    const router = useRouter()
-    const onSubmit = async (values, { setSubmitting, setErrors, setStatus, resetForm }) => {
-        try {
-            const data = {
-                email: values.email,
-                password: values.password,
-            }
-            
-            // TODO LOGIN IMPLEMENTATION
-
-            store.addNotification({
-                title: "Successful login",
-                message: `Welcome back ${values.email}`,
-                type: "success",
-                insert: "top",
-                container: "bottom-center",
-                animationIn: ["animate__animated", "animate__fadeIn"],
-                animationOut: ["animate__animated", "animate__fadeOut"],
-                dismiss: {
-                    duration: 7500,
-                    onScreen: true
-                }
-            });
-            router.push("/")
-
-            resetForm({})
-            setStatus({ success: true })
-        } catch (error) {
-
-            store.addNotification({
-                title: "Error",
-                message: "Check some field in a form",
-                type: "danger",
-                insert: "top",
-                container: "bottom-center",
-                animationIn: ["animate__animated", "animate__fadeIn"],
-                animationOut: ["animate__animated", "animate__fadeOut"],
-                dismiss: {
-                    duration: 5000,
-                    onScreen: true
-                }
-            });
-
-            setStatus({ success: false })
-            setSubmitting(false)
-            setErrors({ submit: error.message })
-            resetForm({})
-        }
-    }
-
-    const validation = yup.object().shape({
-        email: yup.string().email("Podaj poprawny adres email").max(50, "Email jest zbyt długi").required("To pole jest wymagane"),
-        password: yup.string().required("To pole jest wymagane").min(8, "Hasło musi mieć minimum 8 znaków")
-    });
-
-    const formik = useFormik({
-        initialValues: {
-            email: "",
-            password: "",
+    const people = [
+        {
+          name: 'Jane Cooper',
+          title: 'Regional Paradigm Technician',
+          department: 'Optimization',
+          role: 'Admin',
+          email: 'jane.cooper@example.com',
+          image:
+            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
         },
-        validationSchema: validation,
-        onSubmit: onSubmit
-    })
+        {
+            name: 'Jane Cooper',
+            title: 'Regional Paradigm Technician',
+            department: 'Optimization',
+            role: 'Admin',
+            email: 'jane.cooper@example.com',
+            image:
+              'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+        },
+        {
+            name: 'Jane Cooper',
+            title: 'Regional Paradigm Technician',
+            department: 'Optimization',
+            role: 'Admin',
+            email: 'jane.cooper@example.com',
+            image:
+              'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+          },
+          {
+              name: 'Jane Cooper',
+              title: 'Regional Paradigm Technician',
+              department: 'Optimization',
+              role: 'Admin',
+              email: 'jane.cooper@example.com',
+              image:
+                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+          },
+    ]
 
     return (
         <div className="bg-coolGray-50 ">
@@ -92,79 +67,81 @@ function zaplanowane() {
             </Head>
 
             <Navbar />
-            <main className={`w-screen max-w-full xl:py-28 xxxl:py-48 min-h-screen xxl:min-h-0 ${patterns.lines2}`}>
-                <div className="box-border xl:pt-16 w-full">
-                <div className="w-full xl:w-10/12 mx-auto flex flex-col-reverse xl:flex-row">
-                        <div className="px-8 xl:px-4 w-full xl:w-1/2 mx-auto my-auto" id="form">
-                            <div className="flex flex-wrap justify-center ">
-                                <div className="xl:flex xl:flex-col w-full xl:w-1/2 py-12 ">
-                                    <div className="w-full max-w-2xl xl:max-w-4xl mx-auto xl:mx-0 my-auto">
-                                        <img src={padlock} className="w-48 h-48 mx-auto"></img>
-                                        <h4 className="my-6 text-4xl font-semibold text-center text-indigo-400">Dołącz do Nas</h4>
-                                            <form id="loginForm" onSubmit={e => {
-                                                    e.preventDefault()
-                                                    formik.handleSubmit();
-                                            }}>
-                                            <div className="mb-4">
-                                                <div className="flex px-4 bg-white rounded-md">
-                                                    <input
-                                                        className="w-full py-4 text-xs placeholder-gray-400 font-semibold leading-none bg-white outline-none"
-                                                        type="email" placeholder="Podaj swój email" name="email" required value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-                                                    <svg className="h-6 w-6 ml-4 my-auto text-gray-300"
-                                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                            d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207">
-                                                        </path>
-                                                    </svg>
-                                                </div>
-                                                {formik.touched.email && formik.errors.email ? <ErrorMessage msg={formik.errors.email} /> : null}
-                                            </div>
-                                            <div className="mb-6">
-                                                <div className="flex px-4 bg-white rounded-md">
-                                                    <input
-                                                        className="w-full py-4 text-xs placeholder-gray-400 font-semibold leading-none bg-white outline-none"
-                                                        type="password" placeholder="Podaj swoje hasło" name="password" required value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
-                                                    <button className="ml-4">
-                                                        <svg className="h-6 w-6 my-auto text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                                                            </path>
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                                {formik.touched.password && formik.errors.password ? <ErrorMessage msg={formik.errors.password} /> : null}
-                                            </div>
-                                            <button className="block w-full p-4 text-center text-base text-white font-semibold leading-none bg-indigo-500 hover:bg-indigo-600 rounded">
-                                                Sign in
-                                            </button>
-                                            </form>
-                                        </div>
-                                        <div>
-                                            <p className="mt-4 text-xs text-gray-400 text-center">     
-                                                <Link href="/regulamin">
-                                                    <a className="underline hover:text-gray-500 text-center" >
-                                                        Regulamin
+            <main className={`w-screen max-w-full py-16 xl:py-40 xxxl:py-48 min-h-screen xxl:min-h-0 ${patterns.lines2}`}>
+                <div className="box-border w-full">
+                    <h1 className="text-center text-3xl xl:text-6xl text-white text-extrabold mb-8 uppercase text-shadow-md px-4">Twoje zaplanowane wizyty</h1>
+                    <div className="w-full px-4 max-w-8xl mx-auto flex flex-col-reverse xl:flex-row">
+
+                        <div className="flex flex-col w-full">
+                            <div className="overflow-x-hidden">
+                                <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                                    <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                                        <table className="min-w-full divide-y divide-gray-200">
+                                            <thead className="bg-gray-50">
+                                                <tr>
+                                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Name
+                                                    </th>
+                                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Title
+                                                    </th>
+                                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Status
+                                                    </th>
+                                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Role
+                                                    </th>
+                                                    <th scope="col" className="relative px-6 py-3">
+                                                        <span className="sr-only">Edit</span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="bg-white divide-y divide-gray-200">
+                                                {people.map((person) => (
+                                                <tr key={person.email}>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                    <div className="flex items-center">
+                                                        <div className="flex-shrink-0 h-10 w-10">
+                                                        <img className="h-10 w-10 rounded-full" src={person.image} alt="" />
+                                                        </div>
+                                                        <div className="ml-4">
+                                                        <div className="text-sm font-medium text-gray-900">{person.name}</div>
+                                                        <div className="text-sm text-gray-500">{person.email}</div>
+                                                        </div>
+                                                    </div>
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                    <div className="text-sm text-gray-900">{person.title}</div>
+                                                    <div className="text-sm text-gray-500">{person.department}</div>
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                        Active
+                                                    </span>
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{person.role}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                    <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                                        Edit
                                                     </a>
-                                                </Link>
-                                            </p>
-                                        </div>
+                                                    </td>
+                                                </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-                            <div className="bg-indigo-400 mt-12 xl:mt-0 w-full xl:w-1/2 xl:rounded-3xl shadow-lg" id="image">
-                                <div className="flex items-center mx-auto h-full w-full">
-                                    <img className="mx-auto h-full" src={hospital} alt="" />
-                                </div>
-                            </div>
                         </div>
+                    
+                    </div> 
                 </div>
             </main>
 
-            <div className="w-full py-24 bg-indigo-400">
+            <div className="w-full py-12 xl:py-24 bg-indigo-400">
                <div className="w-full max-w-7xl mx-auto xl:space-x-6 flex flex-col xl:flex-row px-4 xl:px-0">
                 <div className="w-full xl:w-1/2 mx-auto">
-                        <img src={mask} className="w-3/4 h-full mx-auto"></img>
+                        <img src={mask} className="w-1/3 lg:w-2/3 py-4 lg:py-0 h-full mx-auto max-w-xs"></img>
                 </div>   
                 <div className="w-full xl:w-1/2 mx-auto flex flex-col">
                     <h1 className="text-3xl xl:text-5xl font-bold text-white text-center">1. Przygotuj środki ochrony osobistej zgodnych z ustawą np. maskę</h1>
@@ -175,10 +152,10 @@ function zaplanowane() {
                </div>                      
             </div>
 
-            <div className="w-full py-32">
+            <div className="w-full py-12 xl:py-24">
                <div className="w-full max-w-7xl mx-auto xl:space-x-10 flex flex-col xl:flex-row-reverse px-4 xl:px-0">
                 <div className="w-full xl:w-1/2 mx-auto">
-                        <img src={clock} className="w-2/3 h-full mx-auto px-4"></img>
+                        <img src={clock} className="w-1/3 lg:w-2/3 py-4 lg:py-0 h-full mx-auto px-4 max-w-xs"></img>
                 </div>   
                 <div className="w-full xl:w-1/2 mx-auto flex flex-col">
                     <h1 className="text-3xl xl:text-5xl font-bold text-indigo-400 text-center">2. Przyjdź na wizytę punktualnie - działamy jak szwajcarski zegarek</h1>
@@ -189,10 +166,10 @@ function zaplanowane() {
                </div>                      
             </div>
 
-            <div className="w-full py-24 bg-indigo-400">
+            <div className="w-full py-12 xl:py-24 bg-indigo-400">
                <div className="w-full max-w-7xl mx-auto xl:space-x-6 flex flex-col xl:flex-row px-4 xl:px-0">
                 <div className="w-full xl:w-1/2 mx-auto">
-                        <img src={star} className="w-2/3 h-full mx-auto"></img>
+                        <img src={star} className="w-1/3 lg:w-2/3 py-4 lg:py-0 h-full mx-auto max-w-xs"></img>
                 </div>   
                 <div className="w-full xl:w-1/2 mx-auto flex flex-col">
                     <h1 className="text-3xl xl:text-5xl font-bold text-white text-center">3. Zostaw Nam opinię - zawsze staramy się poprawić Nasze usługi</h1>

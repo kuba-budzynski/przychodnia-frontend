@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { useUser, withPageAuthRequired  } from '@auth0/nextjs-auth0';
+import { withPageAuthRequired  } from '@auth0/nextjs-auth0';
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer';
 import axios from 'axios'
@@ -10,7 +10,6 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {ErrorMessage, Astrisk} from '../components/utils'
 import formatDate from '@bitty/format-date'
-import { DatabaseIcon } from '@heroicons/react/outline';
 
 const fetcher = url => axios.get(url).then(res => res.data)
 
@@ -95,7 +94,7 @@ function profile({user}) {
         birthday: data.birthday ? formatDate(new Date(data.birthday), 'YYYY-MM-DD') : "",
         pesel: data?.pesel
       })
-      if(data.fresh == true){
+      if(!data.name_updated || !data.surname_updated || !data.birthday_updated || !data.pesel_updated){
         store.addNotification({
           title: "Twój profil nie jest pełny",
           message: "Uzupełnij brakujące dane",
@@ -115,7 +114,7 @@ function profile({user}) {
 
   if(error) return <div>ERROR</div>
   if(!data) return <Loading />
-  console.log(data)
+
   return (
     <div className="relative w-screen min-h-screen max-w-full bg-gray-50 flex justify-center justify-items-center flex-col">
         <Navbar />
@@ -125,8 +124,8 @@ function profile({user}) {
               <img src={user.picture} className="rounded-full h-full w-full overflow-hidden shadow-xl" alt={data.email} />
             </div>
             <div className="flex flex-col self-center space-y-2">
-              <h1 className="text-5xl text-gray-400 font-semibold">Profil użytkownika:</h1>
-              <h2 className="text-xl text-indigo-400">{data.name && data.surname ? data.name + " " + data.surname : (user.name && user.surname) ? user.name + " " + user.surname: user.nickname}</h2>
+              <h1 className="text-5xl text-gray-500 font-semibold">Profil użytkownika:</h1>
+              <h2 className="text-xl text-indigo-400">{data.name && data.surname ? data.name + " " + data.surname : (user.name) ? user.name : user.nickname}</h2>
               <button type="submit" form="profileForm" className="py-2 bg-emerald-400 hover:bg-emerald-500 text-white text-base font-bold rounded-md">Zapisz zmiany</button>
               <h3 className="text-sm text-gray-400 italic"><Astrisk/> - tych danych nie da się edytować</h3>
             </div>
@@ -140,13 +139,13 @@ function profile({user}) {
             }}>
             <div className="flex flex-col px-4">
               <p className="text-xl text-gray-500 font-semibold mb-1 px-2">Identyfikator użytkownika <Astrisk /></p>
-              <input className="w-full px-3 py-2 text-sm text-gray-300 font-normal leading-none bg-white outline-none rounded-md"
+              <input className="w-full px-3 py-2 text-sm text-gray-400 font-normal leading-none bg-white outline-none rounded-md"
                 type="text" name="id" value={user.sub} readOnly/>
             </div>
 
             <div className="flex flex-col px-4 pt-4">
               <p className="text-xl text-gray-500 font-semibold mb-1 px-2">Email <Astrisk /></p>
-              <input className="w-full px-3 py-2 text-sm text-gray-300 font-normal leading-none bg-white outline-none rounded-md"
+              <input className="w-full px-3 py-2 text-sm text-gray-400 font-normal leading-none bg-white outline-none rounded-md"
                 type="text" name="id" value={data.email} readOnly/>
             </div>
 
@@ -185,12 +184,15 @@ function profile({user}) {
                 {formik.touched.phone && formik.errors.phone ? <ErrorMessage id="errorphone" msg={formik.errors.phone}/> : null}
             </div>
             </form>
-
+            <div className="w-full px-4 text-gray-400 italic text-xs flex justify-between mt-5 max-w-2xl mx-auto">
+              <p>Created at {formatDate(new Date(data.created_at), 'YYYY-MM-DD HH:mm:ss')}</p>
+              <p>Updated at {formatDate(new Date(data.updated_at), 'YYYY-MM-DD HH:mm:ss')}</p>
+            </div>
           </div>
         </div>
         <Footer />
       </div>
-  ) ;
+  );
 }
 
 export default profile
