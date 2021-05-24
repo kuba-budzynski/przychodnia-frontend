@@ -2,17 +2,8 @@ import React from 'react'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import Head from 'next/head'
-import { ErrorMessage } from '../../components/utils'
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import hospital from '../../public/hospital4.svg'
-import { useRouter } from 'next/router';
-import Link from 'next/link'
-import { store } from 'react-notifications-component';
 import patterns from '../../styles/patterns.module.scss'
-
 import mask from '../../public/mask.svg'
-import padlock from '../../public/padlock2.svg'
 import clock from '../../public/clock.svg'
 import star from '../../public/star.svg'
 
