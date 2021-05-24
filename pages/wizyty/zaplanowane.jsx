@@ -23,40 +23,48 @@ function zaplanowane() {
     const people = [
         {
           name: 'Jane Cooper',
-          title: 'Regional Paradigm Technician',
-          department: 'Optimization',
-          role: 'Admin',
+          title: 'Badanie krwi',
+          description: '< 30 minut',
+          date: '2020-11-09',
+          time: '11:35',
+          doctor: "Dr. Adam Nowak",
           email: 'jane.cooper@example.com',
           image:
             'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
         },
         {
             name: 'Jane Cooper',
-            title: 'Regional Paradigm Technician',
-            department: 'Optimization',
-            role: 'Admin',
+            title: 'Badanie krwi',
+            description: '< 30 minut',
+            date: '2020-11-09',
+            time: '11:35',
+            doctor: "Dr. Adam Nowak",
             email: 'jane.cooper@example.com',
             image:
-              'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-        },
-        {
+              'https://images.unsplash.com/photo-1554151228-14d9def656e4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+          },
+          {
             name: 'Jane Cooper',
-            title: 'Regional Paradigm Technician',
-            department: 'Optimization',
-            role: 'Admin',
+            title: 'Badanie krwi',
+            description: '< 30 minut',
+            date: '2020-11-09',
+            time: '11:35',
+            doctor: "Dr. Adam Nowak",
             email: 'jane.cooper@example.com',
             image:
-              'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+              'https://images.unsplash.com/photo-1555952517-2e8e729e0b44?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
           },
           {
               name: 'Jane Cooper',
-              title: 'Regional Paradigm Technician',
-              department: 'Optimization',
-              role: 'Admin',
+              title: 'Badanie krwi',
+              description: '< 30 minut',
+              date: '2020-11-09',
+              time: '11:35',
+              doctor: "Dr. Adam Nowak",
               email: 'jane.cooper@example.com',
               image:
                 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-          },
+            },
     ]
 
     return (
@@ -80,19 +88,22 @@ function zaplanowane() {
                                             <thead className="bg-gray-50">
                                                 <tr>
                                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                        Name
+                                                        Dane
                                                     </th>
                                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                        Title
+                                                        Usługa
+                                                    </th>
+                                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Doktor
+                                                    </th>
+                                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Data
                                                     </th>
                                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                         Status
                                                     </th>
-                                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                        Role
-                                                    </th>
                                                     <th scope="col" className="relative px-6 py-3">
-                                                        <span className="sr-only">Edit</span>
+                                                        <span className="sr-only">Anuluj</span>
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -100,30 +111,36 @@ function zaplanowane() {
                                                 {people.map((person) => (
                                                 <tr key={person.email}>
                                                     <td className="px-6 py-4 whitespace-nowrap">
-                                                    <div className="flex items-center">
-                                                        <div className="flex-shrink-0 h-10 w-10">
-                                                        <img className="h-10 w-10 rounded-full" src={person.image} alt="" />
+                                                        <div className="flex items-center">
+                                                            <div className="flex-shrink-0 h-10 w-10">
+                                                                <img className="h-10 w-10 rounded-full" src={person.image} alt="" />
+                                                            </div>
+                                                            <div className="ml-4">
+                                                                <div className="text-sm font-medium text-gray-900">{person.name}</div>
+                                                                <div className="text-sm text-gray-500">{person.email}</div>
+                                                            </div>
                                                         </div>
-                                                        <div className="ml-4">
-                                                        <div className="text-sm font-medium text-gray-900">{person.name}</div>
-                                                        <div className="text-sm text-gray-500">{person.email}</div>
-                                                        </div>
-                                                    </div>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
-                                                    <div className="text-sm text-gray-900">{person.title}</div>
-                                                    <div className="text-sm text-gray-500">{person.department}</div>
+                                                        <div className="text-sm text-gray-900">{person.title}</div>
+                                                        <div className="text-xs text-gray-500 italic">{person.description}</div>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
-                                                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                        Active
-                                                    </span>
+                                                        <div className="text-sm text-gray-900">{person.doctor}</div>
                                                     </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{person.role}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                            Zaplanowane
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    <div className="text-sm text-gray-900">{person.date}</div>
+                                                        <div className="text-sm text-indigo-500 font-semibold">{person.time}</div>
+                                                    </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                    <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                        Edit
-                                                    </a>
+                                                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                                            Anuluj
+                                                        </a>
                                                     </td>
                                                 </tr>
                                                 ))}
