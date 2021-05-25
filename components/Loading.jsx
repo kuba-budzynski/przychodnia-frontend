@@ -1,5 +1,5 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
+import React from 'react';
+import Navbar from '../components/Navbar';
 import { Loader } from '../components/utils';
 import Footer from '../components/Footer';
 
@@ -12,7 +12,7 @@ function Loading() {
             </div>
             <Footer />
         </div>
-    )
+    );
 }
 
-export default Loading
+export default Loading;

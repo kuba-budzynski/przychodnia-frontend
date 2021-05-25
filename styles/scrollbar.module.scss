@@ -1,13 +1,13 @@
-.scrollbar{
+.scrollbar {
     &::-webkit-scrollbar {
         width: 0.45rem;
     }
-      
+
     &::-webkit-scrollbar-track {
         background: transparent;
     }
-      
+
     &::-webkit-scrollbar-thumb {
-        background-color: #6366F1;
+        background-color: #6366f1;
     }
 }

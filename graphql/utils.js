@@ -1,7 +1,8 @@
-import {GraphQLClient, request} from 'graphql-request'
+import { GraphQLClient } from 'graphql-request';
+import SETTINGS from '../config/settings';
 
-export const client = new GraphQLClient(process.env.GRAPHCMS_ENDPOINT, {
+export const client = new GraphQLClient(SETTINGS.graphCMS_URL, {
     headers: {
-        authorization: `Bearer ${process.env.GRAPHCMS_TOKEN}`,
+        authorization: `Bearer ${SETTINGS.graphCMS_Token}`
     }
-})
+});

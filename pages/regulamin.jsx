@@ -1,12 +1,12 @@
-import React from 'react'
-import Head from 'next/head'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
-import ReactMarkdown from 'react-markdown'
+import React from 'react';
+import Head from 'next/head';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import ReactMarkdown from 'react-markdown';
 
-import termsOfServices from '../public/termsBanner.svg'
+import termsOfServices from '../public/termsBanner.svg';
 
-function regulamin({terms}) {
+function regulamin({ terms }) {
     return (
         <div>
             <Head>
@@ -28,16 +28,15 @@ function regulamin({terms}) {
             </main>
             <Footer />
         </div>
-    )
+    );
 }
 
-export default regulamin
+export default regulamin;
 
 export async function getStaticProps(context) {
-
-    const {client} = require('../graphql/utils')
-    const {termsOfServices} = await client.request(
-    `
+    const { client } = require('../graphql/utils');
+    const { termsOfServices } = await client.request(
+        `
         query MyQuery {
             termsOfServices {
                 content
@@ -45,12 +44,13 @@ export async function getStaticProps(context) {
                 updatedAt
             }
         }
-    `)
-    
+    `
+    );
+
     return {
         props: {
             terms: termsOfServices[0]
         },
         revalidate: 86400
-    }
+    };
 }
