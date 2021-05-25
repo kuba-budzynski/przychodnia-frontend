@@ -15,15 +15,15 @@ const fetcher = (url) => request.get(url).then((res) => res.data);
 
 function profile({ user }) {
     const { data, error } = useSWR(`/user/profile/${user.email}`, fetcher);
-    const [init, setInit] = useState({
+    const init = {
         name: data?.name,
         surname: data?.surname,
         phone: data?.phone,
         birthday: data?.birthday,
         pesel: data?.pesel
-    });
+    };
 
-    const onSubmit = async (values, { setSubmitting, setErrors, setStatus, resetForm }) => {
+    const onSubmit = async (values, { setSubmitting, setErrors, setStatus }) => {
         try {
             const url = '/user/profile/' + data.email;
             const x = await request.post(url, values);

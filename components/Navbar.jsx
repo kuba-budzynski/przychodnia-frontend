@@ -26,7 +26,8 @@ import styled from '../styles/scrollbar.module.scss';
 import { client } from '../graphql/utils';
 import useSWR from 'swr';
 import Worker from '../components/Worker';
-import _ from 'lodash';
+import { orderBy } from 'lodash';
+import FetchError from './FetchError';
 
 const fetcher = (query) => client.request(query);
 
@@ -125,20 +126,20 @@ export default function Example() {
     const { user } = useUser();
     const { data, error } = useSWR(
         `query MyQuery {
-        doctors {
-          name
-          surname
-          title
-          slug
-          profile {
-            url
-            width
-            height
-            handle
-          }
-          specializations
-        }
-      }`,
+            doctors {
+            name
+            surname
+            title
+            slug
+            profile {
+                url
+                width
+                height
+                handle
+            }
+            specializations
+            }
+        }`,
         fetcher
     );
 
@@ -180,6 +181,8 @@ export default function Example() {
         };
         window.addEventListener('scroll', checkScroll);
     }, []);
+
+    if (error) <FetchError message={error.data} />;
 
     return (
         <Popover className="relative bg-white outline-none z-10" id="navbar">
@@ -312,7 +315,7 @@ export default function Example() {
                                                                     <Loader color="text-indigo-500"></Loader>
                                                                 </div>
                                                             ) : (
-                                                                _.orderBy(data.doctors, 'surname', 'asc').map((doctor) => (
+                                                                orderBy(data.doctors, 'surname', 'asc').map((doctor) => (
                                                                     <div className="py-2">
                                                                         <Worker doctor={doctor} />
                                                                     </div>
