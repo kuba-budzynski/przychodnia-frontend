@@ -1,6 +1,6 @@
 export default function CallToAction() {
     return (
-        <div className="bg-indigo-50">
+        <div className="to-indigo-100 from-indigo-50 bg-gradient-to-t">
             <div className="max-w-5xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
                 <h2 className="text-4xl font-extrabold tracking-tight text-gray-500 sm:text-4xl">
                     <span className="block">Masz dodatkowe pytania?</span>

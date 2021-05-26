@@ -1,9 +1,8 @@
-import React from 'react';
+import Footer from '../components/Footer';
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
-
 import termsOfServices from '../public/termsBanner.svg';
 
 function regulamin({ terms }) {

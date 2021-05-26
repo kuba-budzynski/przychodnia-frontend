@@ -1,6 +1,3 @@
-import { Fragment, useEffect } from 'react';
-import Link from 'next/link';
-import { Popover, Transition } from '@headlessui/react';
 import {
     BookmarkAltIcon,
     CalendarIcon,
@@ -15,19 +12,22 @@ import {
     ViewGridIcon,
     XIcon
 } from '@heroicons/react/outline';
+import { Fragment, useEffect } from 'react';
+import { Popover, Transition } from '@headlessui/react';
 
-import { ChevronDownIcon } from '@heroicons/react/solid';
-import styles from '../styles/Navbar.module.css';
-import logo from '../public/logo.svg';
-import { useUser } from '@auth0/nextjs-auth0';
 import AvatarDropdown from './AvatarDropdown';
-import { Loader } from '../components/utils';
-import styled from '../styles/scrollbar.module.scss';
-import { client } from '../graphql/utils';
-import useSWR from 'swr';
-import Worker from '../components/Worker';
-import { orderBy } from 'lodash';
+import { ChevronDownIcon } from '@heroicons/react/solid';
 import FetchError from './FetchError';
+import Link from 'next/link';
+import { Loader } from '../components/utils';
+import Worker from '../components/Worker';
+import { client } from '../graphql/utils';
+import logo from '../public/logo.svg';
+import { orderBy } from 'lodash';
+import styled from '../styles/scrollbar.module.scss';
+import styles from '../styles/Navbar.module.css';
+import useSWR from 'swr';
+import { useUser } from '@auth0/nextjs-auth0';
 
 const fetcher = (query) => client.request(query);
 
@@ -194,7 +194,7 @@ export default function Example() {
                                 <Link href="/" prefetch={false}>
                                     <a>
                                         <span className="sr-only">Workflow</span>
-                                        <img className="h-8 w-auto sm:h-10" src={logo} alt="" />
+                                        <img className="h-8 w-auto sm:h-10" src={logo} alt="Logo" />
                                     </a>
                                 </Link>
                             </div>
@@ -316,7 +316,7 @@ export default function Example() {
                                                                 </div>
                                                             ) : (
                                                                 orderBy(data.doctors, 'surname', 'asc').map((doctor) => (
-                                                                    <div className="py-2">
+                                                                    <div className="py-2" key={doctor.slug}>
                                                                         <Worker doctor={doctor} />
                                                                     </div>
                                                                 ))

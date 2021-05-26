@@ -1,5 +1,5 @@
-import axios from 'axios';
 import SETTINGS from '../config/settings';
+import axios from 'axios';
 
 const request = axios.create({
     baseURL: SETTINGS.server

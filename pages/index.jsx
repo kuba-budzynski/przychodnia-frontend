@@ -1,16 +1,14 @@
-import Head from 'next/head';
-import Navbar from '../components/Navbar';
-import Features from '../components/Features';
 import CallToAction from '../components/CallToAction';
-import Hero from '../components/Hero';
+import Features from '../components/Features';
 import Footer from '../components/Footer';
-import TimeLine from '../components/Timeline';
-
-import patterns from '../styles/patterns.module.scss';
-import doctorsRoom from '../public/doctorRoom.jpg';
-
+import Head from 'next/head';
+import Hero from '../components/Hero';
 import Lottie from 'lottie-react';
+import Navbar from '../components/Navbar';
+import TimeLine from '../components/Timeline';
 import covid from '../public/animations/covid.json';
+import doctorsRoom from '../public/doctorRoom.jpg';
+import patterns from '../styles/patterns.module.scss';
 
 export default function Home() {
     return (

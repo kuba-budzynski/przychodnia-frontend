@@ -1,8 +1,9 @@
-import React from 'react';
+import { FaLaptopMedical, FaMoneyBillAlt, FaStethoscope, FaSyringe } from 'react-icons/fa';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
-import { FaMoneyBillAlt, FaSyringe, FaStethoscope, FaLaptopMedical } from 'react-icons/fa';
+
 import { GiMedicines } from 'react-icons/gi';
 import { MdSecurity } from 'react-icons/md';
+import React from 'react';
 import useMedia from 'use-media';
 
 const TimeLine = () => {

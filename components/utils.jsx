@@ -1,5 +1,5 @@
-import React from 'react';
 import { BiLoaderCircle } from 'react-icons/bi';
+import React from 'react';
 
 export const Wrapper = (props) => (
     <div

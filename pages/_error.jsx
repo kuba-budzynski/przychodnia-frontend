@@ -1,5 +1,5 @@
-import React from 'react';
 import Head from 'next/head';
+import React from 'react';
 import SVG from '../utils/SVG';
 import error from '../public/500.svg';
 

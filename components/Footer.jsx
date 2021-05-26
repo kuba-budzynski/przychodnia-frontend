@@ -1,8 +1,9 @@
-import React from 'react';
-import Link from 'next/link';
-import { useFormik } from 'formik';
 import * as yup from 'yup';
+
+import Link from 'next/link';
+import React from 'react';
 import logo from '../public/logo.svg';
+import { useFormik } from 'formik';
 
 const onSubmit = async (values, { setSubmitting, setErrors, setStatus, resetForm }) => {
     try {
@@ -11,6 +12,7 @@ const onSubmit = async (values, { setSubmitting, setErrors, setStatus, resetForm
             email: values.email
         };
         alert(JSON.stringify(data));
+        resetForm();
     } catch (error) {
         setStatus({ success: false });
         setSubmitting(false);

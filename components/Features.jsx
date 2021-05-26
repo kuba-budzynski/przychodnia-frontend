@@ -1,5 +1,6 @@
+import { FaHeartbeat, FaMedal, FaStethoscope } from 'react-icons/fa';
+
 import { GlobeAltIcon } from '@heroicons/react/outline';
-import { FaStethoscope, FaHeartbeat, FaMedal } from 'react-icons/fa';
 
 const features = [
     {

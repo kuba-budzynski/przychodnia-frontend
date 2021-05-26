@@ -1,6 +1,6 @@
 const withImages = require('next-images');
 module.exports = withImages({
-    webpack(config, options) {
+    webpack(config, _) {
         return config;
     },
     domains: [],

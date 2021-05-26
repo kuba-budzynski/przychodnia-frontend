@@ -1,12 +1,11 @@
-import React from 'react';
-import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Head from 'next/head';
-import patterns from '../../styles/patterns.module.scss';
-import mask from '../../public/mask.svg';
+import Navbar from '../../components/Navbar';
+import React from 'react';
 import clock from '../../public/clock.svg';
+import mask from '../../public/mask.svg';
+import patterns from '../../styles/patterns.module.scss';
 import star from '../../public/star.svg';
-
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
 function zaplanowane() {
@@ -62,10 +61,12 @@ function zaplanowane() {
 
             <Navbar />
             <main className={`w-screen max-w-full py-16 xl:py-40 xxxl:py-48 min-h-screen xxl:min-h-0 ${patterns.lines2}`}>
-                <div className="box-border w-full">
-                    <h1 className="text-center text-3xl xl:text-6xl text-white text-extrabold mb-8 uppercase text-shadow-md px-4">
-                        Twoje zaplanowane wizyty
-                    </h1>
+                <div className="box-border w-full mx-auto">
+                    <div class="text-7xl font-extrabold mx-auto w-full mb-8">
+                        <h1 class="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-blue-400 uppercase text-center">
+                            Zaplanowane wizyty
+                        </h1>
+                    </div>
                     <div className="w-full px-4 max-w-8xl mx-auto flex flex-col-reverse xl:flex-row">
                         <div className="flex flex-col w-full">
                             <div className="overflow-x-hidden">
@@ -110,7 +111,7 @@ function zaplanowane() {
                                                         <td className="px-6 py-4 whitespace-nowrap">
                                                             <div className="flex items-center">
                                                                 <div className="flex-shrink-0 h-10 w-10">
-                                                                    <img className="h-10 w-10 rounded-full" src={person.image} alt="" />
+                                                                    <img className="h-10 w-10 rounded-full" src={person.image} alt={person.email} />
                                                                 </div>
                                                                 <div className="ml-4">
                                                                     <div className="text-sm font-medium text-gray-900">{person.name}</div>
@@ -151,7 +152,7 @@ function zaplanowane() {
                 </div>
             </main>
 
-            <div className="w-full py-12 xl:py-24 bg-indigo-400">
+            <div className="w-full py-12 xl:py-24 bg-gradient-to-r from-indigo-400 to-indigo-600">
                 <div className="w-full max-w-7xl mx-auto xl:space-x-6 flex flex-col xl:flex-row px-4 xl:px-0">
                     <div className="w-full xl:w-1/2 mx-auto">
                         <img src={mask} className="w-1/3 lg:w-2/3 py-4 lg:py-0 h-full mx-auto max-w-xs"></img>
@@ -191,7 +192,7 @@ function zaplanowane() {
                 </div>
             </div>
 
-            <div className="w-full py-12 xl:py-24 bg-indigo-400">
+            <div className="w-full py-12 xl:py-24 bg-gradient-to-l from-indigo-400 to-indigo-600">
                 <div className="w-full max-w-7xl mx-auto xl:space-x-6 flex flex-col xl:flex-row px-4 xl:px-0">
                     <div className="w-full xl:w-1/2 mx-auto">
                         <img src={star} className="w-1/3 lg:w-2/3 py-4 lg:py-0 h-full mx-auto max-w-xs"></img>
@@ -210,7 +211,6 @@ function zaplanowane() {
                     </div>
                 </div>
             </div>
-
             <Footer />
         </div>
     );

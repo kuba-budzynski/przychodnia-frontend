@@ -1,8 +1,8 @@
-import React from 'react';
-import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import formatDate from '@bitty/format-date';
 import Head from 'next/head';
+import Navbar from '../../components/Navbar';
+import React from 'react';
+import formatDate from '@bitty/format-date';
 
 export default function Worker({ doctor }) {
     return (

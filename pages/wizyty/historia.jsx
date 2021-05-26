@@ -1,20 +1,19 @@
-import React from 'react';
-import Navbar from '../../components/Navbar';
+import * as yup from 'yup';
+
+import { ErrorMessage } from '../../components/utils';
 import Footer from '../../components/Footer';
 import Head from 'next/head';
-import { ErrorMessage } from '../../components/utils';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import hospital from '../../public/hospital4.svg';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { store } from 'react-notifications-component';
-import patterns from '../../styles/patterns.module.scss';
-
-import server from '../../public/server.svg';
-import padlock from '../../public/padlock2.svg';
+import Navbar from '../../components/Navbar';
+import React from 'react';
 import cypher from '../../public/cyphers.svg';
-
+import hospital from '../../public/hospital4.svg';
+import padlock from '../../public/padlock2.svg';
+import patterns from '../../styles/patterns.module.scss';
+import server from '../../public/server.svg';
+import { store } from 'react-notifications-component';
+import { useFormik } from 'formik';
+import { useRouter } from 'next/router';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
 function historia() {
@@ -123,9 +122,9 @@ function historia() {
                                                         viewBox="0 0 24 24"
                                                         stroke="currentColor">
                                                         <path
-                                                            stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                            stroke-width="2"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth="2"
                                                             d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
                                                     </svg>
                                                 </div>
@@ -151,14 +150,14 @@ function historia() {
                                                             viewBox="0 0 24 24"
                                                             stroke="currentColor">
                                                             <path
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round"
-                                                                stroke-width="2"
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth="2"
                                                                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                                             <path
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round"
-                                                                stroke-width="2"
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth="2"
                                                                 d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                                         </svg>
                                                     </button>
@@ -184,7 +183,7 @@ function historia() {
                         </div>
                         <div className="bg-indigo-400 mt-12 xl:mt-0 w-full xl:w-1/2 xl:rounded-3xl shadow-lg" id="image">
                             <div className="flex items-center mx-auto h-full w-full">
-                                <img className="mx-auto h-full" src={hospital} alt="" />
+                                <img className="mx-auto h-full" src={hospital} alt="hospital" />
                             </div>
                         </div>
                     </div>

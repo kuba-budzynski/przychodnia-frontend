@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import useSWR from 'swr';
-import Loading from '../components/Loading';
-import { store } from 'react-notifications-component';
-import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { ErrorMessage, Astrisk } from '../components/utils';
+
+import { Astrisk, ErrorMessage } from '../components/utils';
+import React, { useEffect } from 'react';
+
+import Footer from '../components/Footer';
+import Loading from '../components/Loading';
+import Navbar from '../components/Navbar';
 import formatDate from '@bitty/format-date';
 import request from '../config/request';
+import { store } from 'react-notifications-component';
+import { useFormik } from 'formik';
+import useSWR from 'swr';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
 const fetcher = (url) => request.get(url).then((res) => res.data);
 
@@ -114,7 +116,7 @@ function profile({ user }) {
             <div className="min-h-screen py-16 w-full max-w-5xl mx-auto px-4">
                 <div className="flex space-x-8 my-24">
                     <div className="w-40 h-40 bg-cover">
-                        <img src={user.picture} className="rounded-full h-full w-full overflow-hidden shadow-xl" alt={data.email} />
+                        <img src={user.picture} className="rounded-full h-full w-full overflow-hidden shadow-xl" alt={data.email.toString()} />
                     </div>
                     <div className="flex flex-col self-center space-y-2">
                         <h1 className="text-5xl text-gray-500 font-semibold">Profil użytkownika:</h1>

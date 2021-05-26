@@ -1,12 +1,10 @@
-import React from 'react';
+import { ChevronUpIcon } from '@heroicons/react/solid';
+import { Disclosure } from '@headlessui/react';
+import Footer from '../components/Footer';
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Disclosure } from '@headlessui/react';
-import { ChevronUpIcon } from '@heroicons/react/solid';
-
 import faqImage from '../public/faqLogo.svg';
 
 function faq({ faqs }) {
@@ -36,7 +34,7 @@ function faq({ faqs }) {
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
                                 </svg>
                             </bottom>
                         </div>
@@ -51,7 +49,7 @@ function faq({ faqs }) {
                     {faqs.map((faq) => (
                         <Disclosure id={faq.id}>
                             {({ open }) => (
-                                <div className="max-w-5xl mx-auto my-3 px-4">
+                                <div className="max-w-5xl mx-auto my-3 px-4" id={'q' + faq.id}>
                                     <Disclosure.Button className="flex justify-between items-center w-full px-5 py-3 shadow-sm text-base font-medium text-left text-indigo-500 bg-indigo-50 rounded-lg hover:bg-indigo-100 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                                         <ReactMarkdown>{faq.question}</ReactMarkdown>
                                         <ChevronUpIcon className={`${!open ? 'transform rotate-180' : ''} w-8 h-8 text-indigo-500`} />
@@ -77,7 +75,7 @@ function faq({ faqs }) {
 
 export default faq;
 
-export async function getStaticProps(context) {
+export async function getStaticProps() {
     const { client } = require('../graphql/utils');
     const { faqs } = await client.request(
         `

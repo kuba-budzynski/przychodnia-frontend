@@ -1,11 +1,11 @@
-import React, { useState, Fragment } from 'react';
-import Link from 'next/link';
-import { Popover, Transition } from '@headlessui/react';
-import { ChevronDownIcon } from '@heroicons/react/solid';
-import smartTruncate from 'smart-truncate';
-
-import { FaRegClipboard } from 'react-icons/fa';
 import { AiOutlineClockCircle, AiOutlineUser } from 'react-icons/ai';
+import { Popover, Transition } from '@headlessui/react';
+import React, { Fragment } from 'react';
+
+import { ChevronDownIcon } from '@heroicons/react/solid';
+import { FaRegClipboard } from 'react-icons/fa';
+import Link from 'next/link';
+import smartTruncate from 'smart-truncate';
 
 function AvatarDropdown({ profileURL, name }) {
     const url = profileURL == null || profileURL == undefined ? 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png' : profileURL;
@@ -34,11 +34,11 @@ function AvatarDropdown({ profileURL, name }) {
     return (
         <div className="flex flex-col items-start sm:items-center sm:flex-row flex-wrap outline-none ring-0">
             <Popover className="relative outline-none">
-                {({ open }) => (
+                {() => (
                     <>
                         <Popover.Button className="flex flex-row space-x-3">
                             <div className="w-10 h-10 bg-cover">
-                                <img src={url} className="rounded-full h-full w-full overflow-hidden" alt />
+                                <img src={url} className="rounded-full h-full w-full overflow-hidden" alt="popover" />
                             </div>
                             <div className="flex items-center space-x-1 self-center">
                                 <p className="text-gray-800 text-base font-medium">{smartTruncate(name, 15)}</p>
