@@ -1,6 +1,8 @@
+import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useEffect, useState } from 'react';
 
-import { Transition } from '@headlessui/react';
+import { ExclamationIcon } from '@heroicons/react/outline';
+import SideOver from '../components/SideOver';
 
 function Calendar() {
     const current = new Date();
@@ -14,6 +16,7 @@ function Calendar() {
     const [event_date, setEventDate] = useState('');
     const [event_theme, setEventTheme] = useState('');
     const [openEventModal, setOpenEventModal] = useState(false);
+    const [sidebar, setSidebar] = useState(false);
 
     const themes = [
         {
@@ -76,19 +79,6 @@ function Calendar() {
         setEventDate(new Date(year, month, date).toDateString());
     };
 
-    const addEvent = () => {
-        if (event_title == '') return;
-        events.push({
-            event_date: event_date,
-            event_title: event_title,
-            event_theme: event_theme
-        });
-        setEventDate('');
-        setEventTitle('');
-        setEventTheme('blue');
-        setOpenEventModal(false);
-    };
-
     const getNoOfDays = (newMonth) => {
         const daysInMonth = new Date(year, newMonth + 1, 0).getDate();
         const daysOfWeek = new Date(year, newMonth).getDay();
@@ -110,9 +100,18 @@ function Calendar() {
     }, []);
 
     return (
-        <div className="w-full h-full p-0 m-0">
+        <div className="w-full h-full p-0 m-0 relative">
+            <SideOver show={sidebar} />
+            <button
+                className="fixed top-16 mt-4 right-3 h-10 w-10 p-2 bg-indigo-400 rounded-xl text-white z-10 hover:bg-indigo-500 cursor-pointer flex justify-items-center justify-center"
+                onClick={() => setSidebar(!sidebar)}>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </button>
+
             <div className="antialiased sans-serif min-h-screen">
-                <div className="mx-auto px-4 py-2 md:py-32">
+                <div className="mx-auto px-4 py-20 lg:py-32">
                     <div className="relative bg-white rounded-xl shadow-2xl overflow-hidden">
                         <div className="flex items-center justify-between p-4">
                             <div className="space-x-1">
@@ -226,40 +225,76 @@ function Calendar() {
                 </div>
 
                 <Transition.Root show={openEventModal} as={Fragment}>
-                    <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }} className="fixed z-40 top-0 right-0 left-0 bottom-0 h-full w-full">
-                        <div className="p-4 max-w-7xl w-full px-2 mx-auto absolute left-0 right-0 overflow-hidden mt-24">
-                            <div
-                                className="shadow absolute right-0 top-0 w-10 h-10 rounded-full bg-white text-rose-500 hover:text-rose-600 inline-flex items-center justify-center cursor-pointer"
-                                onClick={() => setOpenEventModal(!openEventModal)}>
-                                <svg className="fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path d="M16.192 6.344L11.949 10.586 7.707 6.344 6.293 7.758 10.535 12 6.293 16.242 7.707 17.656 11.949 13.414 16.192 17.656 17.606 16.242 13.364 12 17.606 7.758z" />
-                                </svg>
-                            </div>
+                    <Dialog
+                        as="div"
+                        static
+                        className="fixed z-10 inset-0 overflow-y-auto"
+                        open={openEventModal}
+                        onClose={() => setOpenEventModal(false)}>
+                        <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0"
+                                enterTo="opacity-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100"
+                                leaveTo="opacity-0">
+                                <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-90 transition-opacity" />
+                            </Transition.Child>
 
-                            <div className="shadow-xl rounded-xl bg-white overflow-hidden w-full block p-8 h-full">
-                                <h2 className="font-bold text-2xl mb-6 text-gray-800 border-b pb-2">Modal title - {event_date}</h2>
+                            {/* This element is to trick the browser into centering the modal contents. */}
+                            <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+                                &#8203;
+                            </span>
 
-                                <div className="w-full bg-white h-96"></div>
-
-                                <div className="mt-2 text-right">
-                                    <button
-                                        type="button"
-                                        className="bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 border border-indigo-400 rounded-lg shadow-sm mr-2"
-                                        onClick={() => setOpenEventModal(false)}>
-                                        Cancel
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="bg-indigo-400 hover:bg-indigo-500 text-white font-semibold py-2 px-8 border rounded-lg shadow-sm"
-                                        onClick={() => {
-                                            alert('OK');
-                                        }}>
-                                        Save
-                                    </button>
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                                <div
+                                    className="inline-block bg-white rounded-xl text-left overflow-hidden shadow-2xl transform transition-all align-middle max-w-5xl w-full relative h-full"
+                                    style={{ minHeight: '50vh' }}>
+                                    <div className="px-4 p-6 pb-4 h-full">
+                                        <div className="sm:flex sm:items-start h-full">
+                                            <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                                <ExclamationIcon className="h-6 w-6 text-red-600" aria-hidden="true" />
+                                            </div>
+                                            <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                                <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
+                                                    Deactivate account
+                                                </Dialog.Title>
+                                                <div className="mt-2">
+                                                    <p className="text-sm text-gray-500">
+                                                        Are you sure you want to deactivate your account? All of your data will be permanently
+                                                        removed. This action cannot be undone.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="bg-coolGray-100 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse absolute inset-x-0 bottom-0">
+                                        <button
+                                            type="button"
+                                            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                            onClick={() => setOpenEventModal(false)}>
+                                            Deactivate
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                            onClick={() => setOpenEventModal(false)}>
+                                            Cancel
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            </Transition.Child>
                         </div>
-                    </div>
+                    </Dialog>
                 </Transition.Root>
             </div>
         </div>

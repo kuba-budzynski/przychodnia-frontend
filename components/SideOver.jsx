@@ -1,14 +1,18 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import { XIcon } from '@heroicons/react/outline';
 
-export default function SideOver() {
-    const [open, setOpen] = useState(true);
+export default function SideOver({ show }) {
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        setOpen(!open);
+    }, [show]);
 
     return (
         <Transition.Root show={open} as={Fragment}>
-            <Dialog as="div" static className="fixed inset-0 overflow-hidden z-50" open={open} onClose={setOpen}>
+            <Dialog as="div" static className="fixed inset-0 overflow-hidden z-50" open={open} onClose={() => setOpen(!open)}>
                 <div className="absolute inset-0 overflow-hidden z-50">
                     <Transition.Child
                         as={Fragment}
