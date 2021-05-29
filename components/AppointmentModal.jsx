@@ -9,7 +9,7 @@ import useSWR from 'swr';
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
 function AppointmentModal({ change, setChange, appointment }) {
-    const { data, error } = useSWR('https://jsonplaceholder.typicode.com/todos/1', fetcher);
+    const { data, error } = useSWR(`https://jsonplaceholder.typicode.com/todos/${appointment.index + 1}`, fetcher);
 
     return (
         <Transition.Root show={change} as={Fragment}>
@@ -55,7 +55,7 @@ function AppointmentModal({ change, setChange, appointment }) {
                                                 Deactivate account
                                             </Dialog.Title>
                                             <div className="mt-2">
-                                                <p className="text-sm text-gray-500">{JSON.stringify(appointment)}</p>
+                                                <p className="text-sm text-gray-500">{JSON.stringify(data)}</p>
                                             </div>
                                         </div>
                                     </div>
