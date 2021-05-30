@@ -18,16 +18,22 @@ import { Popover, Transition } from '@headlessui/react';
 import AvatarDropdown from './AvatarDropdown';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import FetchError from './FetchError';
+import { GraphQLClient } from 'graphql-request';
 import Link from 'next/link';
 import { Loader } from '../components/utils';
 import Worker from '../components/Worker';
-import { client } from '../graphql/utils';
 import logo from '../public/logo.svg';
 import { orderBy } from 'lodash';
 import styled from '../styles/scrollbar.module.scss';
 import styles from '../styles/Navbar.module.css';
 import useSWR from 'swr';
 import { useUser } from '@auth0/nextjs-auth0';
+
+const client = new GraphQLClient(process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT, {
+    headers: {
+        authorization: `Bearer ${process.env.NEXT_PUBLIC_GRAPHCMS_TOKEN}`
+    }
+});
 
 const fetcher = (query) => client.request(query);
 
