@@ -25,7 +25,7 @@ module.exports = {
         'plugin:prettier/recommended' // Make this the last element so prettier config overrides other formatting rules
     ],
     rules: {
-        'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Use our .prettierrc file as source
+        'prettier/prettier': ['error', { endOfLine: 'auto' }, { usePrettierrc: true }], // Use our .prettierrc file as source
         'react/react-in-jsx-scope': 'off',
         'jsx-a11y/anchor-is-valid': [
             'error',
@@ -34,6 +34,9 @@ module.exports = {
                 specialLink: ['hrefLeft', 'hrefRight'],
                 aspects: ['invalidHref', 'preferButton']
             }
-        ]
+        ],
+        'react/prop-types': 0,
+        'jsx-a11y/alt-text': [0, {}],
+        'react/jsx-key': [false, {}]
     }
 };

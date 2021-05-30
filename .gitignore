@@ -27,8 +27,12 @@ yarn-error.log*
 # local env files
 .env
 .env.development
+.env.local
 .env.test.local
 .env.production
 
 # vercel
 .vercel
+
+#editor
+.vscode
