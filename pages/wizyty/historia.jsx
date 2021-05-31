@@ -94,8 +94,7 @@ function historia({ doctors, user }) {
                                                 </tr>
                                             </thead>
                                             <tbody className="bg-white divide-y divide-gray-200">
-                                                {appointments.map((appointment) => {
-                                                    return(
+                                                {appointments.map((appointment) => (
                                                     <tr key={appointment.id}>
                                                         <td className="px-6 py-4 whitespace-nowrap">
                                                             <div className="flex items-center">
@@ -126,7 +125,7 @@ function historia({ doctors, user }) {
                                                             </a>
                                                         </td>
                                                     </tr>
-                                                )})}
+                                                ))}
                                             </tbody>
                                         </table>
                                     </div>

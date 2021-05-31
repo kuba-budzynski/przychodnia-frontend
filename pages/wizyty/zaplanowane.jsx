@@ -1,56 +1,48 @@
 import Footer from '../../components/Footer';
 import Head from 'next/head';
 import Navbar from '../../components/Navbar';
-import React from 'react';
+import Loading from '../../components/Loading';
+import React, { useEffect, useState } from 'react';
 import clock from '../../public/clock.svg';
 import mask from '../../public/mask.svg';
 import patterns from '../../styles/patterns.module.scss';
 import star from '../../public/star.svg';
+import useSWR from 'swr';
+import { find } from 'lodash';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import request from '../../config/request';
 
-function zaplanowane() {
-    const people = [
-        {
-            name: 'Jane Cooper',
-            title: 'Badanie krwi',
-            description: '< 30 minut',
-            date: '2020-11-09',
-            time: '11:35',
-            doctor: 'Dr. Adam Nowak',
-            email: 'jane.cooper@example.com',
-            image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60'
-        },
-        {
-            name: 'Jane Cooper',
-            title: 'Badanie krwi',
-            description: '< 30 minut',
-            date: '2020-11-09',
-            time: '11:35',
-            doctor: 'Dr. Adam Nowak',
-            email: 'jane.cooper@example.com',
-            image: 'https://images.unsplash.com/photo-1554151228-14d9def656e4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60'
-        },
-        {
-            name: 'Jane Cooper',
-            title: 'Badanie krwi',
-            description: '< 30 minut',
-            date: '2020-11-09',
-            time: '11:35',
-            doctor: 'Dr. Adam Nowak',
-            email: 'jane.cooper@example.com',
-            image: 'https://images.unsplash.com/photo-1555952517-2e8e729e0b44?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60'
-        },
-        {
-            name: 'Jane Cooper',
-            title: 'Badanie krwi',
-            description: '< 30 minut',
-            date: '2020-11-09',
-            time: '11:35',
-            doctor: 'Dr. Adam Nowak',
-            email: 'jane.cooper@example.com',
-            image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60'
+const fetcher = (url) => request.get(url).then((res) => res.data);
+
+const getDoctorData = (doctors, appointment) => {
+
+    return find(doctors, {id: appointment.doctorKey});
+}
+function zaplanowane({ doctors, user }) {
+    const [appointments, setAppointments] = useState([]);
+    const { data, error } = useSWR(`/appointment/allFuture/${user.email}`, fetcher);
+    useEffect(() => {
+        if(data) {
+            setAppointments(data.map(e => {
+            const doctor = getDoctorData(doctors, e);
+            const serviceName = find(doctor.uslugiLekarzy, {id: e.details[0].serviceKey}).usluga.nazwa;
+            return(
+                {
+                    id: e.id,
+                    doctorName: `${doctor.title} ${doctor.name} ${doctor.surname}`,
+                    date: new Date(e.date),
+                    doctorImg: doctor.profile.url,
+                    duration: e.details[0].duration,
+                    service: serviceName
+                }
+            )
+            }
+        ));
         }
-    ];
+    }, [data]);
+
+    if (error) return <div>ERROR</div>;
+    if (!data) return <Loading />;
 
     return (
         <div className="bg-coolGray-50 ">
@@ -78,7 +70,7 @@ function zaplanowane() {
                                                     <th
                                                         scope="col"
                                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                        Dane
+                                                        Doktor
                                                     </th>
                                                     <th
                                                         scope="col"
@@ -88,17 +80,12 @@ function zaplanowane() {
                                                     <th
                                                         scope="col"
                                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                        Doktor
+                                                        Status
                                                     </th>
                                                     <th
                                                         scope="col"
                                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                         Data
-                                                    </th>
-                                                    <th
-                                                        scope="col"
-                                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                        Status
                                                     </th>
                                                     <th scope="col" className="relative px-6 py-3">
                                                         <span className="sr-only">Anuluj</span>
@@ -106,34 +93,30 @@ function zaplanowane() {
                                                 </tr>
                                             </thead>
                                             <tbody className="bg-white divide-y divide-gray-200">
-                                                {people.map((person) => (
-                                                    <tr key={person.email}>
+                                            {appointments.map((appointment) => (
+                                                    <tr key={appointment.id}>
                                                         <td className="px-6 py-4 whitespace-nowrap">
                                                             <div className="flex items-center">
                                                                 <div className="flex-shrink-0 h-10 w-10">
-                                                                    <img className="h-10 w-10 rounded-full" src={person.image} alt={person.email} />
+                                                                    <img className="h-10 w-10 rounded-full" src={appointment.doctorImg} alt={appointment.doctorName} />
                                                                 </div>
                                                                 <div className="ml-4">
-                                                                    <div className="text-sm font-medium text-gray-900">{person.name}</div>
-                                                                    <div className="text-sm text-gray-500">{person.email}</div>
+                                                                    <div className="text-sm font-medium text-gray-900">{appointment.doctorName}</div>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td className="px-6 py-4 whitespace-nowrap">
-                                                            <div className="text-sm text-gray-900">{person.title}</div>
-                                                            <div className="text-xs text-gray-500 italic">{person.description}</div>
-                                                        </td>
-                                                        <td className="px-6 py-4 whitespace-nowrap">
-                                                            <div className="text-sm text-gray-900">{person.doctor}</div>
+                                                            <div className="text-xs text-gray-500 italic">{appointment.service}</div>
+                                                            <div className="text-xs text-gray-500 italic">{`~${appointment.duration} min`}</div>
                                                         </td>
                                                         <td className="px-6 py-4 whitespace-nowrap">
                                                             <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                                Zaplanowane
+                                                                Zakończona
                                                             </span>
                                                         </td>
                                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                            <div className="text-sm text-gray-900">{person.date}</div>
-                                                            <div className="text-sm text-indigo-500 font-semibold">{person.time}</div>
+                                                            <div className="text-sm text-gray-900">{`${appointment.date.toLocaleString().split(',')[0]}`}</div>
+                                                            <div className="text-sm text-indigo-500 font-semibold">{appointment.date.toTimeString().split(' ')[0].slice(0,5)}</div>
                                                         </td>
                                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                             <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -141,7 +124,7 @@ function zaplanowane() {
                                                             </a>
                                                         </td>
                                                     </tr>
-                                                ))}
+                                            ))}
                                             </tbody>
                                         </table>
                                     </div>
@@ -216,4 +199,44 @@ function zaplanowane() {
     );
 }
 
-export default withPageAuthRequired(zaplanowane);
+
+export default zaplanowane;
+
+export const getServerSideProps = withPageAuthRequired({
+  async getServerSideProps({ params }) {
+    const { client } = require('../../graphql/utils');
+    const { doctors } = await client.request(
+        `
+      query MyQuery() {
+        doctors {
+            id
+            name
+            surname
+            title
+            slug
+            profile {
+                url
+                width
+                height
+                handle
+            }
+            uslugiLekarzy {
+            id
+            usluga {
+                nazwa
+            }
+            czasTrwania
+            }
+            specializations
+            }
+      }
+    `
+    );
+
+    return {
+        props: {
+            doctors,
+        }
+    }
+}
+});
