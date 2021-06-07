@@ -3,9 +3,9 @@ import { Fragment, useRef, useState } from 'react';
 
 import { ExclamationIcon } from '@heroicons/react/outline';
 
-export default function Appointment({appointment}) {
+export default function Appointment({appointment, onClick}) {
     return (
-        <li className="p-4 flex space-x-4">
+        <li className="p-4 flex space-x-4 cursor-pointer group hover:bg-blueGray-50" onClick={onClick}>
             <div className="px- py-4 whitespace-nowrap">
                     <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10">

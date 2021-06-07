@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import AppointmentModal from './AppointmentModal';
+import AcceptModal from './AcceptModal';
 import { useAppointmentContext } from '../store/AppointmentContext';
 
 function Calendar({slots, month, year, onChangeMonth, onChangeYear, doctorsData}) {
@@ -10,6 +11,7 @@ function Calendar({slots, month, year, onChangeMonth, onChangeYear, doctorsData}
     const [no_of_days, setNumberOfDays] = useState([]);
     const [blankdays, setBlankdays] = useState([]);
     const [openEventModal, setOpenEventModal] = useState(null);
+    const [openPickedAppointmentModal, setOpenPickedAppointmentModal] = useState(null);
     const themes = [
         {
             value: 'blue',
@@ -214,7 +216,8 @@ function Calendar({slots, month, year, onChangeMonth, onChangeYear, doctorsData}
                     </div>
                 </div>
 
-                <AppointmentModal change={!!openEventModal} setChange={setOpenEventModal} appointments={openEventModal ? slots[openEventModal - 1] : null} doctorsData={doctorsData}/>
+                <AppointmentModal change={!!openEventModal} setChange={setOpenEventModal} pickAppointment={(e) => setOpenPickedAppointmentModal(e)} appointments={openEventModal ? slots[openEventModal - 1] : null} doctorsData={doctorsData}/>
+                <AcceptModal change={!!openPickedAppointmentModal} setChange={setOpenPickedAppointmentModal} appointment={openPickedAppointmentModal}/>
             </div>
         </div>
     );
