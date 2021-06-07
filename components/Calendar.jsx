@@ -3,18 +3,13 @@ import React, { useEffect, useState } from 'react';
 import AppointmentModal from './AppointmentModal';
 import { useAppointmentContext } from '../store/AppointmentContext';
 
-function Calendar() {
+function Calendar({slots, month, year, onChangeMonth, onChangeYear, doctorsData}) {
     const { appointment, update } = useAppointmentContext();
-
-    const current = new Date();
     const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const [month, setMonth] = useState(current.getMonth());
-    const [year, setYear] = useState(current.getFullYear());
     const [no_of_days, setNumberOfDays] = useState([]);
     const [blankdays, setBlankdays] = useState([]);
-    const [openEventModal, setOpenEventModal] = useState(false);
-
+    const [openEventModal, setOpenEventModal] = useState(null);
     const themes = [
         {
             value: 'blue',
@@ -61,8 +56,8 @@ function Calendar() {
 
     const initDate = () => {
         const today = new Date();
-        setMonth(today.getMonth());
-        setYear(today.getFullYear());
+        onChangeMonth(today.getMonth());
+        onChangeYear(today.getFullYear());
     };
 
     const isToday = (date) => {
@@ -72,7 +67,7 @@ function Calendar() {
     };
 
     const showEventModal = (date) => {
-        setOpenEventModal(true);
+        setOpenEventModal(date);
         //setEventDate(new Date(year, month, date).toDateString());
     };
 
@@ -122,7 +117,7 @@ function Calendar() {
                                         className="group leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer p-1 items-center"
                                         disabled={month == 0}
                                         onClick={() => {
-                                            setMonth(month - 1);
+                                            onChangeMonth(month - 1);
                                             getNoOfDays(month - 1);
                                         }}>
                                         <svg
@@ -139,7 +134,7 @@ function Calendar() {
                                         className="group leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer p-1"
                                         disabled={month == 11}
                                         onClick={() => {
-                                            setMonth(month + 1);
+                                            onChangeMonth(month + 1);
                                             getNoOfDays(month + 1);
                                         }}>
                                         <svg
@@ -201,7 +196,7 @@ function Calendar() {
                                                     )
                                                     .map((event) => (
                                                         <div
-                                                            className={`px-2 py-1 rounded-lg mt-1 overflow-hidden border 
+                                                            className={`px-2 py-1 rounded-lg mt-1 overflow-hidden border
                                                             ${event.event_theme === 'blue' && 'border-blue-200 text-blue-800 bg-blue-100'}
                                                             ${event.event_theme === 'red' && 'border-red-200 text-red-800 bg-red-100'}
                                                             ${event.event_theme === 'yellow' && 'border-yellow-200 text-yellow-800 bg-yellow-100'}
@@ -219,7 +214,7 @@ function Calendar() {
                     </div>
                 </div>
 
-                <AppointmentModal change={openEventModal} setChange={setOpenEventModal} appointment={appointment} />
+                <AppointmentModal change={!!openEventModal} setChange={setOpenEventModal} appointments={openEventModal ? slots[openEventModal - 1] : null} doctorsData={doctorsData}/>
             </div>
         </div>
     );

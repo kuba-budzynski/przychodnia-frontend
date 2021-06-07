@@ -1,14 +1,33 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 import Calendar from '../components/Calendar';
 import Footer from '../components/Footer';
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import { XIcon } from '@heroicons/react/outline';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import useSWR from 'swr';
+import request from '../config/request';
+import { getSlots } from '../lib/slots';
 
-function calendar() {
+const fetcher = (url) => request.get(url).then((res) => res.data);
+
+function calendar({ doctors, user }) {
+    const current = new Date();
     const [open, setOpen] = useState(false);
+    const [slots, setSlots] = useState([]);
+    const { data, error } = useSWR(`/appointment`, fetcher);
+
+    const [month, setMonth] = useState(current.getMonth());
+    const [year, setYear] = useState(current.getFullYear());
+
+    useEffect(() => {
+        if(data) {
+            const generatedSlots = getSlots(data, doctors, new Date(year, month, 1), new Date(year, month + 1, 0), true);
+            setSlots(generatedSlots);
+        }
+    }, [data]);
 
     return (
         <div className="bg-coolGray-50 w-screen max-w-full">
@@ -86,7 +105,7 @@ function calendar() {
                 </button>
 
                 <div className="lg:max-w-6xl h-full w-full mx-auto">
-                    <Calendar />
+                    <Calendar slots={slots} month={month} year={year} doctorsData={doctors} onChangeMonth={(m) =>setMonth(m)} onChangeYear={(y) => setYear(y)}/>
                 </div>
             </div>
             <Footer />
@@ -95,3 +114,43 @@ function calendar() {
 }
 
 export default calendar;
+
+export const getServerSideProps = withPageAuthRequired({
+    async getServerSideProps({ params }) {
+      const { client } = require('../graphql/utils');
+      const { doctors } = await client.request(
+          `
+        query MyQuery() {
+          doctors {
+              id
+              name
+              surname
+              title
+              slug
+              profile {
+                  url
+                  width
+                  height
+                  handle
+              }
+              uslugiLekarzy {
+              id
+              usluga {
+                  nazwa
+                }
+              cena
+              czasTrwania
+              }
+              specializations
+              }
+        }
+      `
+      );
+
+      return {
+          props: {
+              doctors,
+          }
+      }
+  }
+  });
