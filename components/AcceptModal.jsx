@@ -14,13 +14,12 @@ import request from '../config/request';
 
 const fetcher = (url) => request.get(url).then((res) => res.data);
 function AcceptModal({ change, setChange, appointment }) {
-    console.log(appointment)
     const { user } = useUser();
     const onSubmit = async () => {
         try {
             const url = '/appointment/new/' + user.email;
             const x = await request.post(url, {
-                date:  appointment.date.toISOString(),
+                date:  appointment.date.getTime(),
                 duration:  appointment.duration,
                 price:  appointment.price,
                 notes:  appointment.notes,

@@ -284,7 +284,9 @@ export default function Example() {
                                 <Link href="/regulamin" prefetch={false}>
                                     <a className="text-base font-medium text-gray-500 hover:text-gray-900">Regulamin</a>
                                 </Link>
-
+                                <Link href="/calendar" prefetch={false}>
+                                    <a className="text-base font-medium text-gray-500 hover:text-gray-900">Utwórz wizytę</a>
+                                </Link>
                                 <Popover className="relative max-h-96">
                                     {({ open }) => (
                                         <>
