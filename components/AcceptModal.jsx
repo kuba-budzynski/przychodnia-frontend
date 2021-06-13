@@ -13,7 +13,7 @@ import { store } from 'react-notifications-component';
 import request from '../config/request';
 
 const fetcher = (url) => request.get(url).then((res) => res.data);
-function AcceptModal({ change, setChange, appointment }) {
+function AcceptModal({ change, setChange, appointment, onAccept }) {
     const { user } = useUser();
     const onSubmit = async () => {
         try {
@@ -42,6 +42,7 @@ function AcceptModal({ change, setChange, appointment }) {
                     }
                 });
                 setChange(null);
+                onAccept();
             } else {
                 store.addNotification({
                     title: 'Wystąpiły jakieś blędy',

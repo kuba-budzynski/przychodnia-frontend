@@ -11,6 +11,7 @@ import useSWR from 'swr';
 import { find } from 'lodash';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import request from '../../config/request';
+import { store } from 'react-notifications-component';
 
 const fetcher = (url) => request.get(url).then((res) => res.data);
 
@@ -20,7 +21,46 @@ const getDoctorData = (doctors, appointment) => {
 }
 function zaplanowane({ doctors, user }) {
     const [appointments, setAppointments] = useState([]);
-    const { data, error } = useSWR(`/appointment/allFuture/${user.email}`, fetcher);
+    const { data, error, mutate } = useSWR(`/appointment/allFuture/${user.email}`, fetcher);
+
+    const onAnuluj = async (id) => {
+        try {
+            const url = '/appointment/' + id;
+            const x = await request.delete(url);
+            if (x.data || x.status < 300) {
+                store.addNotification({
+                    title: 'Success',
+                    message: 'Anulowano wizytę.',
+                    type: 'success',
+                    insert: 'top',
+                    container: 'bottom-center',
+                    animationIn: ['animate__animated', 'animate__fadeIn'],
+                    animationOut: ['animate__animated', 'animate__fadeOut'],
+                    dismiss: {
+                        duration: 5000,
+                        onScreen: true
+                    }
+                });
+                mutate()
+            } else {
+                store.addNotification({
+                    title: 'Wystąpiły jakieś blędy',
+                    message: 'Spróbuj ponownie później',
+                    type: 'danger',
+                    insert: 'top',
+                    container: 'bottom-center',
+                    animationIn: ['animate__animated', 'animate__fadeIn'],
+                    animationOut: ['animate__animated', 'animate__fadeOut'],
+                    dismiss: {
+                        duration: 5000,
+                        onScreen: true
+                    }
+                });
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    };
     useEffect(() => {
         if(data) {
             setAppointments(data.map(e => {
@@ -119,9 +159,9 @@ function zaplanowane({ doctors, user }) {
                                                             <div className="text-sm text-indigo-500 font-semibold">{appointment.date.toTimeString().split(' ')[0].slice(0,5)}</div>
                                                         </td>
                                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                                            <button className="text-indigo-600 hover:text-indigo-900" onClick={() => onAnuluj(appointment.id)}>
                                                                 Anuluj
-                                                            </a>
+                                                            </button>
                                                         </td>
                                                     </tr>
                                             ))}

@@ -4,7 +4,7 @@ import AppointmentModal from './AppointmentModal';
 import AcceptModal from './AcceptModal';
 import { useAppointmentContext } from '../store/AppointmentContext';
 
-function Calendar({slots, month, year, onChangeMonth, onChangeYear, doctorsData}) {
+function Calendar({slots, month, year, onChangeMonth, onChangeYear, doctorsData, reloadSlots}) {
     const { appointment, update } = useAppointmentContext();
     const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -217,7 +217,7 @@ function Calendar({slots, month, year, onChangeMonth, onChangeYear, doctorsData}
                 </div>
 
                 <AppointmentModal change={!!openEventModal} setChange={setOpenEventModal} pickAppointment={(e) => setOpenPickedAppointmentModal(e)} appointments={openEventModal ? slots[openEventModal - 1] : null} doctorsData={doctorsData}/>
-                <AcceptModal change={!!openPickedAppointmentModal} setChange={setOpenPickedAppointmentModal} appointment={openPickedAppointmentModal}/>
+                <AcceptModal change={!!openPickedAppointmentModal} setChange={setOpenPickedAppointmentModal} appointment={openPickedAppointmentModal} onAccept={reloadSlots}/>
             </div>
         </div>
     );

@@ -17,7 +17,7 @@ function calendar({ doctors, user }) {
     const current = new Date();
     const [open, setOpen] = useState(false);
     const [slots, setSlots] = useState([]);
-    const { data, error } = useSWR(`/appointment`, fetcher);
+    const { data, mutate, error } = useSWR(`/appointment`, fetcher);
 
     const [month, setMonth] = useState(current.getMonth());
     const [year, setYear] = useState(current.getFullYear());
@@ -27,7 +27,7 @@ function calendar({ doctors, user }) {
             const generatedSlots = getSlots(data, doctors, new Date(year, month, 1), new Date(year, month + 1, 0), true);
             setSlots(generatedSlots);
         }
-    }, [data]);
+    }, [data, ]);
 
     return (
         <div className="bg-coolGray-50 w-screen max-w-full">
@@ -105,7 +105,7 @@ function calendar({ doctors, user }) {
                 </button>
 
                 <div className="lg:max-w-6xl h-full w-full mx-auto">
-                    <Calendar slots={slots} month={month} year={year} doctorsData={doctors} onChangeMonth={(m) =>setMonth(m)} onChangeYear={(y) => setYear(y)}/>
+                    <Calendar slots={slots} month={month} year={year} doctorsData={doctors} onChangeMonth={(m) =>setMonth(m)} onChangeYear={(y) => setYear(y)} reloadSlots={mutate}/>
                 </div>
             </div>
             <Footer />
