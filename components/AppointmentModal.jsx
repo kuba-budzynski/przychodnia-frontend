@@ -1,15 +1,24 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
-
 import { ExclamationIcon } from '@heroicons/react/outline';
 import { Loader } from '../components/utils';
 import  Appointment from '../components/Appointment';
 import { find } from 'lodash';
 import fetch from 'unfetch';
 import useSWR from 'swr';
-import { SearchBox } from 'react-instantsearch-dom';
+import {
+    InstantSearch,
+    Hits,
+    SearchBox,
+    Pagination,
+    Highlight,
+    ClearRefinements,
+    RefinementList,
+    Configure,
+    NumericMenu
+  } from 'react-instantsearch-dom';
 
-function AppointmentModal({ change, setChange, appointments, doctorsData, pickAppointment }) {
+function AppointmentModal({ change, setChange, doctorsData, pickAppointment }) {
 
     return (
         <Transition.Root show={change} as={Fragment}>
@@ -42,13 +51,18 @@ function AppointmentModal({ change, setChange, appointments, doctorsData, pickAp
                         <div
                             className="inline-block bg-white rounded-xl text-left overflow-hidden shadow-2xl transform transition-all align-middle max-w-5xl relative h-full p-6"
                             style={{ minHeight: '50vh' }}>
+                            <SearchBox />
                             <ul className="px-4 p-6 pb-4 h-full w-full max-h-80 overflow-y-auto overflow-hidden" >
-                                {appointments ? appointments.map((a) => <Appointment appointment={{...a, ...find(doctorsData, {'id': a.doctorKey})}} key={a.id}
+                                <Hits hitComponent={({hit}) => <Appointment appointment={{...hit, ...find(doctorsData, {'id': hit.doctorKey})}} key={hit.id}
                                     onClick={() => {
                                      setChange(null);
                                      pickAppointment(a);
-                                }}/>) : <p>Sorry we didn't find any appointments for that day</p>}
+                                }}/>}
+                                />
                             </ul>
+                            <div classNam="w-full">
+                                <Pagination padding={2}/>
+                            </div>
                             <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                                 <button
                                     type="button"

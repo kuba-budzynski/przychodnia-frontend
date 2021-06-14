@@ -10,8 +10,23 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import useSWR from 'swr';
 import request from '../config/request';
 import { getSlots } from '../lib/slots';
+import algoliasearch from 'algoliasearch/lite';
+import SETTINGS from '../config/settings';
+import {
+    InstantSearch,
+    Hits,
+    SearchBox,
+    Pagination,
+    Highlight,
+    ClearRefinements,
+    RefinementList,
+    Configure,
+    NumericMenu
+  } from 'react-instantsearch-dom';
 
 const fetcher = (url) => request.get(url).then((res) => res.data);
+console.log(SETTINGS)
+const searchClient = algoliasearch('3FR1ZU4LEJ', 'a8f90a98981f69e57922fefc05917286');
 
 function calendar({ doctors, user }) {
     const current = new Date();
@@ -38,6 +53,7 @@ function calendar({ doctors, user }) {
 
             <Navbar />
             <div className="w-full min-h-screen flex flex-col py-16 bg-coolGray-50 justify-center justify-items-center">
+                <InstantSearch indexName="prod_SLOTS" searchClient={searchClient}>
                 <Transition.Root show={open} as={Fragment}>
                     <Dialog as="div" static className="fixed inset-0 overflow-hidden z-50" open={open} onClose={() => setOpen(!open)}>
                         <div className="absolute inset-0 overflow-hidden z-50">
@@ -83,11 +99,15 @@ function calendar({ doctors, user }) {
                                                 <Dialog.Title className="text-lg font-medium text-gray-900">Side menu</Dialog.Title>
                                             </div>
                                             <div className="mt-6 relative flex-1 px-4 sm:px-6">
-                                                {/* Replace with your content */}
-                                                <div className="absolute inset-0 px-4 sm:px-6">
-                                                    <div className="h-full border-2 border-dashed border-gray-200" aria-hidden="true" />
-                                                </div>
-                                                {/* /End replace */}
+                                                <NumericMenu
+                                                attribute="price"
+                                                items={[
+                                                    { label: '<= $10', end: 10 },
+                                                    { label: '$10 - $100', start: 10, end: 100 },
+                                                    { label: '$100 - $500', start: 100, end: 500 },
+                                                    { label: '>= $500', start: 500 },
+                                                    ]}
+                                                />
                                             </div>
                                         </div>
                                     </div>
@@ -107,6 +127,7 @@ function calendar({ doctors, user }) {
                 <div className="lg:max-w-6xl h-full w-full mx-auto">
                     <Calendar slots={slots} month={month} year={year} doctorsData={doctors} onChangeMonth={(m) =>setMonth(m)} onChangeYear={(y) => setYear(y)} reloadSlots={mutate}/>
                 </div>
+            </InstantSearch>
             </div>
             <Footer />
         </div>

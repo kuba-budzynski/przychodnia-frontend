@@ -4,6 +4,7 @@ import { Fragment, useRef, useState } from 'react';
 import { ExclamationIcon } from '@heroicons/react/outline';
 
 export default function Appointment({appointment, onClick}) {
+
     return (
         <li className="p-4 flex space-x-4 cursor-pointer group hover:bg-blueGray-50" onClick={onClick}>
             <div className="px- py-4 whitespace-nowrap">
@@ -21,8 +22,8 @@ export default function Appointment({appointment, onClick}) {
                 <div className="text-xs text-gray-500 italic">{`~${appointment.duration} min`}</div>
             </div>
             <div className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                <div className="text-sm text-gray-900">{`${appointment.date.toLocaleString().split(',')[0]}`}</div>
-                <div className="text-sm text-indigo-500 font-semibold">{appointment.date.toTimeString().split(' ')[0].slice(0,5)}</div>
+                <div className="text-sm text-gray-900">{`${new Date(appointment.date).toLocaleString().split(',')[0]}`}</div>
+                <div className="text-sm text-indigo-500 font-semibold">{new Date(appointment.date).toTimeString().split(' ')[0].slice(0,5)}</div>
             </div>
         </li>
     );

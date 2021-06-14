@@ -4,7 +4,53 @@ import AppointmentModal from './AppointmentModal';
 import AcceptModal from './AcceptModal';
 import { useAppointmentContext } from '../store/AppointmentContext';
 
-function Calendar({slots, month, year, onChangeMonth, onChangeYear, doctorsData, reloadSlots}) {
+import { createConnector } from 'react-instantsearch-dom';
+
+const connectCalendar = createConnector({
+    displayName: "Calendar",
+    getProvidedProps(props, searchState) {
+      return {
+        ...props,
+        currentRefinement: searchState.date || null
+      };
+    },
+
+    refine(props, searchState, nextRefinement) {
+        console.log(props, searchState, nextRefinement)
+      return {
+        ...searchState,
+        date: nextRefinement
+      };
+    },
+    getSearchParameters(searchParameters, props, searchState) {
+        if (searchState.date) {
+
+        const searchDate = new Date(searchState.date);
+        console.log(searchState.date, searchDate)
+        const fromTime = new Date(searchDate.getFullYear(),searchDate.getMonth(), searchDate.getDate(), 0, 0);
+        const toTime = new Date(searchDate.getFullYear(),searchDate.getMonth(), searchDate.getDate() + 1, 0, 0);
+          searchParameters = searchParameters.addNumericRefinement(
+            'date',
+            ">=",
+            fromTime.getTime()
+          )
+          searchParameters = searchParameters.addNumericRefinement(
+            'date',
+            "<",
+            toTime.getTime()
+          )
+          console.log(searchParameters, fromTime, toTime)
+        }
+        return searchParameters;
+      },
+    cleanUp(props, searchState) {
+      const { date, ...rest } = searchState;
+
+      return rest;
+    },
+  });
+function WidgetCalendar({month, year, onChangeMonth, onChangeYear, doctorsData, reloadSlots, currentRefinement, refine}) {
+    console.log(currentRefinement)
     const { appointment, update } = useAppointmentContext();
     const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -177,11 +223,7 @@ function Calendar({slots, month, year, onChangeMonth, onChangeYear, doctorsData,
                                         key={index}
                                         onClick={() => {
                                             showEventModal(date);
-                                            update({
-                                                date: new Date(year, month, date + 1),
-                                                index,
-                                                events
-                                            });
+                                            refine(new Date(year, month, date))
                                         }}>
                                         <div
                                             className={`text-sm lg:text-base absolute inset-x-1 bottom-1 w-6 lg:w-8 h-6 lg:h-8 items-center justify-center p-1 text-center leading-none rounded-full transition ease-in-out duration-100 ${
@@ -216,11 +258,11 @@ function Calendar({slots, month, year, onChangeMonth, onChangeYear, doctorsData,
                     </div>
                 </div>
 
-                <AppointmentModal change={!!openEventModal} setChange={setOpenEventModal} pickAppointment={(e) => setOpenPickedAppointmentModal(e)} appointments={openEventModal ? slots[openEventModal - 1] : null} doctorsData={doctorsData}/>
+                <AppointmentModal change={!!currentRefinement} setChange={(e) => refine(e)} pickAppointment={(e) => setOpenPickedAppointmentModal(e)} doctorsData={doctorsData}/>
                 <AcceptModal change={!!openPickedAppointmentModal} setChange={setOpenPickedAppointmentModal} appointment={openPickedAppointmentModal} onAccept={reloadSlots}/>
             </div>
         </div>
     );
 }
-
+const Calendar = connectCalendar(WidgetCalendar);
 export default Calendar;
