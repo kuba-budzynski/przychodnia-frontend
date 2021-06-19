@@ -16,10 +16,10 @@ function faq({ faqs }) {
             </Head>
 
             <Navbar />
-            <div className="w-full h-full lg:mt-0 flex flex-col-reverse py-12 lg:py-0 lg:flex-row bg-indigo-50 max-h-screen shadow-lg">
-                <div className="w-full lg:w-1/3 my-auto pt-24">
-                    <div className="w-4/5 mx-auto lg:mx-0 lg:ml-auto">
-                        <h1 className="text-6xl font-bold text-center text-blue-600">Często zadawane Nam pytania</h1>
+            <div className="w-full h-full xl:mt-0 flex flex-col-reverse py-12 lg:py-0 lg:flex-row bg-indigo-50 max-h-screen shadow-lg">
+                <div className="w-full xl:w-1/3 my-auto pt-24">
+                    <div className="w-4/5 mx-auto xl:mx-0 xl:ml-auto">
+                        <h1 className="text-3xl lg:text-6xl font-bold text-center text-blue-600">Często zadawane Nam pytania</h1>
                         <h3 className="text-gray-400 text-center italic py-8 text-xl">
                             Stresuje Cię wizyta? Masz jakieś ciekawe pytania dotyczące działania placówki? Szukasz inspiracji?
                         </h3>
@@ -40,7 +40,7 @@ function faq({ faqs }) {
                         </div>
                     </div>
                 </div>
-                <div className="w-full lg:w-2/3">
+                <div className="hidden xl:flex w-full lg:w-2/3">
                     <img src={faqImage} className="w-full h-auto max-h-screen object-cover"></img>
                 </div>
             </div>
