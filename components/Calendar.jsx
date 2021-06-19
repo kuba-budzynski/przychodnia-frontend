@@ -141,14 +141,14 @@ function WidgetCalendar({month, year, onChangeMonth, onChangeYear, doctorsData, 
                 <div className="mx-auto px-4 py-20 lg:py-32">
                     <div className="relative bg-white rounded-xl shadow-2xl overflow-hidden">
                         <div className="flex items-center justify-between p-4">
-                            <div className="space-x-1 px-4">
-                                <span className="text-3xl font-extrabold text-indigo-500 cursor-pointer">{MONTH_NAMES[month]}</span>
+                            <div className="space-x-1 ">
+                                <span className="text-base md:text-xl font-extrabold text-indigo-500 cursor-pointer">{MONTH_NAMES[month]}</span>
                                 <span className="text-2xl font-bold text-indigo-500">/</span>
                                 <span className="text-base text-gray-400">{year}</span>
                             </div>
                             <div className="flex space-x-3">
                                 <button
-                                    className="px-3 py-0 bg-indigo-500 text-white font-bold text-base rounded-lg hover:bg-indigo-400"
+                                    className="px-2 py-0 bg-indigo-500 text-white font-bold text-sm rounded-lg hover:bg-indigo-400"
                                     onClick={() => {
                                         initDate();
                                         getNoOfDays(new Date().getMonth());
@@ -253,9 +253,19 @@ function WidgetCalendar({month, year, onChangeMonth, onChangeYear, doctorsData, 
                         </div>
                     </div>
                 </div>
-
-                <AppointmentModal change={!!currentRefinement} setChange={(e) => refine(e)} pickAppointment={(e) => setOpenPickedAppointmentModal(e)} doctorsData={doctorsData}/>
-                <AcceptModal change={!!openPickedAppointmentModal} setChange={setOpenPickedAppointmentModal} appointment={openPickedAppointmentModal} onAccept={reloadSlots}/>
+                <AppointmentModal
+                    change={!!openEventModal}
+                    setChange={setOpenEventModal}
+                    pickAppointment={(e) => setOpenPickedAppointmentModal(e)}
+                    appointments={openEventModal ? slots[openEventModal - 1] : null}
+                    doctorsData={doctorsData}
+                />
+                <AcceptModal
+                    change={!!openPickedAppointmentModal}
+                    setChange={setOpenPickedAppointmentModal}
+                    appointment={openPickedAppointmentModal}
+                    onAccept={reloadSlots}
+                />
             </div>
         </div>
     );

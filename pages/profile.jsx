@@ -114,22 +114,22 @@ function profile({ user }) {
         <div className="relative w-screen min-h-screen max-w-full bg-gray-50 flex justify-center justify-items-center flex-col">
             <Navbar />
             <div className="min-h-screen py-16 w-full max-w-5xl mx-auto px-4">
-                <div className="flex space-x-8 my-24">
-                    <div className="w-40 h-40 bg-cover">
-                        <img src={user.picture} className="rounded-full h-full w-full overflow-hidden shadow-xl" alt={data.email.toString()} />
+                <div className="flex flex-col xl:flex-row xl:space-x-8 my-24 mx-auto justify-center justify-items-center">
+                    <div className="w-full bg-cover xl:mx-auto pb-6 xl:pb-0">
+                        <img src={user.picture} className="rounded-full overflow-hidden shadow-xl w-40 h-40 mx-auto" alt={data.email.toString()} />
                     </div>
-                    <div className="flex flex-col self-center space-y-2">
-                        <h1 className="text-5xl text-gray-500 font-semibold">Profil użytkownika:</h1>
-                        <h2 className="text-xl text-indigo-400">
+                    <div className="flex flex-col space-y-2 justify-center justify-items-center">
+                        <h1 className="text-center xl:text-left text-5xl text-gray-500 font-semibold">Profil użytkownika:</h1>
+                        <h2 className="text-center xl:text-left text-xl text-indigo-400">
                             {data.name && data.surname ? data.name + ' ' + data.surname : user.name ? user.name : user.nickname}
                         </h2>
                         <button
                             type="submit"
                             form="profileForm"
-                            className="py-2 bg-emerald-400 hover:bg-emerald-500 text-white text-base font-bold rounded-md">
+                            className="py-2 bg-emerald-400 hover:bg-emerald-500 text-white text-base font-bold rounded-md w-full max-w-xl mx-auto">
                             Zapisz zmiany
                         </button>
-                        <h3 className="text-sm text-gray-400 italic">
+                        <h3 className="text-center text-sm text-gray-400 italic">
                             <Astrisk /> - tych danych nie da się edytować
                         </h3>
                     </div>
@@ -251,7 +251,7 @@ function profile({ user }) {
                             {formik.touched.phone && formik.errors.phone ? <ErrorMessage id="errorphone" msg={formik.errors.phone} /> : null}
                         </div>
                     </form>
-                    <div className="w-full px-4 text-gray-400 italic text-xs flex justify-between mt-5 max-w-2xl mx-auto">
+                    <div className="w-full px-4 text-gray-400 italic text-xs  hidden xl:flex justify-between mt-5 max-w-2xl mx-auto">
                         <p>Created at {formatDate(new Date(data.created_at), 'YYYY-MM-DD HH:mm:ss')}</p>
                         <p>Updated at {formatDate(new Date(data.updated_at), 'YYYY-MM-DD HH:mm:ss')}</p>
                     </div>
