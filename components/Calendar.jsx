@@ -16,7 +16,6 @@ const connectCalendar = createConnector({
     },
 
     refine(props, searchState, nextRefinement) {
-        console.log(props, searchState, nextRefinement)
       return {
         ...searchState,
         date: nextRefinement
@@ -26,7 +25,6 @@ const connectCalendar = createConnector({
         if (searchState.date) {
 
         const searchDate = new Date(searchState.date);
-        console.log(searchState.date, searchDate)
         const fromTime = new Date(searchDate.getFullYear(),searchDate.getMonth(), searchDate.getDate(), 0, 0);
         const toTime = new Date(searchDate.getFullYear(),searchDate.getMonth(), searchDate.getDate() + 1, 0, 0);
           searchParameters = searchParameters.addNumericRefinement(
@@ -39,7 +37,6 @@ const connectCalendar = createConnector({
             "<",
             toTime.getTime()
           )
-          console.log(searchParameters, fromTime, toTime)
         }
         return searchParameters;
       },
@@ -50,7 +47,6 @@ const connectCalendar = createConnector({
     },
   });
 function WidgetCalendar({month, year, onChangeMonth, onChangeYear, doctorsData, reloadSlots, currentRefinement, refine}) {
-    console.log(currentRefinement)
     const { appointment, update } = useAppointmentContext();
     const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];

@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useEffect, useState } from 'react';
-
+import 'instantsearch.css/themes/satellite.css';
 import Calendar from '../components/Calendar';
 import Footer from '../components/Footer';
 import Head from 'next/head';
@@ -25,8 +25,7 @@ import {
   } from 'react-instantsearch-dom';
 
 const fetcher = (url) => request.get(url).then((res) => res.data);
-console.log(SETTINGS)
-const searchClient = algoliasearch('3FR1ZU4LEJ', 'a8f90a98981f69e57922fefc05917286');
+const searchClient = algoliasearch('VKKCML3WNE', 'c1d5300ee10d2bb9006ad4316e9e9881');
 
 function calendar({ doctors, user }) {
     const current = new Date();

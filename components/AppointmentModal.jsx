@@ -51,16 +51,18 @@ function AppointmentModal({ change, setChange, doctorsData, pickAppointment }) {
                         <div
                             className="inline-block bg-white rounded-xl text-left overflow-hidden shadow-2xl transform transition-all align-middle max-w-5xl relative h-full p-6"
                             style={{ minHeight: '50vh' }}>
-                            <SearchBox />
+                            <div className="w-full m-3">
+                                <SearchBox />
+                            </div>
                             <ul className="px-4 p-6 pb-4 h-full w-full max-h-80 overflow-y-auto overflow-hidden" >
                                 <Hits hitComponent={({hit}) => <Appointment appointment={{...hit, ...find(doctorsData, {'id': hit.doctorKey})}} key={hit.id}
                                     onClick={() => {
                                      setChange(null);
-                                     pickAppointment(a);
+                                     pickAppointment(hit);
                                 }}/>}
                                 />
                             </ul>
-                            <div classNam="w-full">
+                            <div className="w-full grid  place-items-center m-3">
                                 <Pagination padding={2}/>
                             </div>
                             <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
