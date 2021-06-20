@@ -1,11 +1,13 @@
+import dynamic from 'next/dynamic';
 import { ChevronUpIcon } from '@heroicons/react/solid';
 import { Disclosure } from '@headlessui/react';
-import Footer from '../components/Footer';
 import Head from 'next/head';
-import Navbar from '../components/Navbar';
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
 import faqImage from '../public/faqLogo.svg';
+
+const Footer = dynamic(import('../components/Footer'));
+const Navbar = dynamic(import('../components/Navbar'));
+const ReactMarkdown = dynamic(import('react-markdown'));
 
 function faq({ faqs }) {
     return (
@@ -20,10 +22,10 @@ function faq({ faqs }) {
                 <div className="w-full xl:w-1/3 my-auto pt-24">
                     <div className="w-4/5 mx-auto xl:mx-0 xl:ml-auto">
                         <h1 className="text-3xl lg:text-6xl font-bold text-center text-blue-600">Często zadawane Nam pytania</h1>
-                        <h3 className="text-gray-400 text-center italic py-8 text-xl">
+                        <h2 className="text-gray-400 text-center italic py-8 text-xl">
                             Stresuje Cię wizyta? Masz jakieś ciekawe pytania dotyczące działania placówki? Szukasz inspiracji?
-                        </h3>
-                        <h4 className="text-blue-500 text-3xl text-center font-bold">Zobacz czy pytania poniżej zaspokoją Twoją ciekawość</h4>
+                        </h2>
+                        <h3 className="text-blue-500 text-3xl text-center font-bold">Zobacz czy pytania poniżej zaspokoją Twoją ciekawość</h3>
                         <div className="mt-16 mx-auto text-center">
                             <bottom
                                 type="button"
@@ -41,7 +43,7 @@ function faq({ faqs }) {
                     </div>
                 </div>
                 <div className="hidden xl:flex w-full lg:w-2/3">
-                    <img src={faqImage} className="w-full h-auto max-h-screen object-cover"></img>
+                    <img src={faqImage} className="w-full h-auto max-h-screen object-cover" alt="faq"></img>
                 </div>
             </div>
             <main className="w-screen max-w-full py-32 ">
