@@ -257,7 +257,6 @@ function WidgetCalendar({month, year, onChangeMonth, onChangeYear, doctorsData, 
                     change={!!openEventModal}
                     setChange={setOpenEventModal}
                     pickAppointment={(e) => setOpenPickedAppointmentModal(e)}
-                    appointments={openEventModal ? slots[openEventModal - 1] : null}
                     doctorsData={doctorsData}
                 />
                 <AcceptModal
