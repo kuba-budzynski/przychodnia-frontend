@@ -1,7 +1,7 @@
 import 'react-notifications-component/dist/theme.css';
 import 'react-vertical-timeline-component/style.min.css';
 import '../styles/globals.css';
-
+import 'instantsearch.css/themes/satellite.css';
 import { AppointmentProvider } from '../store/AppointmentContext';
 import ReactNotification from 'react-notifications-component';
 import { UserProvider } from '@auth0/nextjs-auth0';

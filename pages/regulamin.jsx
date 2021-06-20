@@ -1,9 +1,11 @@
-import Footer from '../components/Footer';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import Navbar from '../components/Navbar';
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
 import termsOfServices from '../public/termsBanner.svg';
+
+const Footer = dynamic(import('../components/Footer'));
+const Navbar = dynamic(import('../components/Navbar'));
+const ReactMarkdown = dynamic(import('react-markdown'));
 
 function regulamin({ terms }) {
     return (
@@ -15,7 +17,7 @@ function regulamin({ terms }) {
 
             <Navbar />
             <div className="w-full mt-12 lg:mt-0 shadow-lg">
-                <img src={termsOfServices} className="w-full h-auto max-h-screen object-cover"></img>
+                <img src={termsOfServices} className="w-full h-auto max-h-screen object-cover" alt="regulamin"></img>
             </div>
             <main className="min-h-screen w-screen max-w-full bg-coolGray-50 ">
                 <div className="max-w-4xl mx-auto py-16">

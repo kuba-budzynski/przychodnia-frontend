@@ -19,7 +19,8 @@ function AcceptModal({ change, setChange, appointment, onAccept }) {
         try {
             const url = '/appointment/new/' + user.email;
             const x = await request.post(url, {
-                date:  appointment.date.getTime(),
+                objectID: appointment.objectID,
+                date:  appointment.date,
                 duration:  appointment.duration,
                 price:  appointment.price,
                 notes:  appointment.notes,
