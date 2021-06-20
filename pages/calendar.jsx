@@ -14,15 +14,9 @@ import algoliasearch from 'algoliasearch/lite';
 import SETTINGS from '../config/settings';
 import {
     InstantSearch,
-    Hits,
-    SearchBox,
-    Pagination,
-    Highlight,
-    ClearRefinements,
-    RefinementList,
-    Configure,
     NumericMenu
   } from 'react-instantsearch-dom';
+import CustomRangeSlider from '../components/RangeSlider';
 
 const fetcher = (url) => request.get(url).then((res) => res.data);
 const searchClient = algoliasearch('VKKCML3WNE', 'c1d5300ee10d2bb9006ad4316e9e9881');
@@ -30,18 +24,16 @@ const searchClient = algoliasearch('VKKCML3WNE', 'c1d5300ee10d2bb9006ad4316e9e98
 function calendar({ doctors, user }) {
     const current = new Date();
     const [open, setOpen] = useState(false);
-    const [slots, setSlots] = useState([]);
     const { data, mutate, error } = useSWR(`/appointment`, fetcher);
-
+    const [refresh, setRefresh] = useState(false)
     const [month, setMonth] = useState(current.getMonth());
     const [year, setYear] = useState(current.getFullYear());
 
-    useEffect(() => {
-        if(data) {
-            const generatedSlots = getSlots(data, doctors, new Date(year, month, 1), new Date(year, month + 1, 0), true);
-            setSlots(generatedSlots);
-        }
-    }, [data, ]);
+    const refreshSearch = () => {
+        setRefresh({ refresh: true }, () => {
+            setRefresh({ refresh: false });
+        });
+      }
 
     return (
         <div className="bg-coolGray-50 w-screen max-w-full">
@@ -52,7 +44,7 @@ function calendar({ doctors, user }) {
 
             <Navbar />
             <div className="w-full min-h-screen flex flex-col py-16 bg-coolGray-50 justify-center justify-items-center">
-                <InstantSearch indexName="prod_SLOTS" searchClient={searchClient}>
+                <InstantSearch indexName="prod_SLOTS" searchClient={searchClient} refresh={refresh}>
                 <Transition.Root show={open} as={Fragment}>
                     <Dialog as="div" static className="fixed inset-0 overflow-hidden z-50" open={open} onClose={() => setOpen(!open)}>
                         <div className="absolute inset-0 overflow-hidden z-50">
@@ -98,15 +90,7 @@ function calendar({ doctors, user }) {
                                                 <Dialog.Title className="text-lg font-medium text-gray-900">Side menu</Dialog.Title>
                                             </div>
                                             <div className="mt-6 relative flex-1 px-4 sm:px-6">
-                                                <NumericMenu
-                                                attribute="price"
-                                                items={[
-                                                    { label: '<= $10', end: 10 },
-                                                    { label: '$10 - $100', start: 10, end: 100 },
-                                                    { label: '$100 - $500', start: 100, end: 500 },
-                                                    { label: '>= $500', start: 500 },
-                                                    ]}
-                                                />
+                                                <CustomRangeSlider />
                                             </div>
                                         </div>
                                     </div>
@@ -122,9 +106,8 @@ function calendar({ doctors, user }) {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                 </button>
-
                 <div className="lg:max-w-6xl h-full w-full mx-auto">
-                    <Calendar slots={slots} month={month} year={year} doctorsData={doctors} onChangeMonth={(m) =>setMonth(m)} onChangeYear={(y) => setYear(y)} reloadSlots={mutate}/>
+                    <Calendar month={month} year={year} doctorsData={doctors} onChangeMonth={(m) =>setMonth(m)} onChangeYear={(y) => setYear(y)} reloadSlots={refreshSearch}/>
                 </div>
             </InstantSearch>
             </div>

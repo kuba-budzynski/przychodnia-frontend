@@ -63,6 +63,7 @@ function zaplanowane({ doctors, user }) {
     };
     useEffect(() => {
         if(data) {
+            console.log(data)
             setAppointments(data.map(e => {
             const doctor = getDoctorData(doctors, e);
             const serviceName = find(doctor.uslugiLekarzy, {id: e.details[0].serviceKey}).usluga.nazwa;

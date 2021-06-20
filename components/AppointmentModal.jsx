@@ -7,15 +7,9 @@ import { find } from 'lodash';
 import fetch from 'unfetch';
 import useSWR from 'swr';
 import {
-    InstantSearch,
     Hits,
     SearchBox,
     Pagination,
-    Highlight,
-    ClearRefinements,
-    RefinementList,
-    Configure,
-    NumericMenu
   } from 'react-instantsearch-dom';
 
 function AppointmentModal({ change, setChange, doctorsData, pickAppointment }) {
