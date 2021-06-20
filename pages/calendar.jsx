@@ -14,6 +14,8 @@ import algoliasearch from 'algoliasearch/lite';
 import SETTINGS from '../config/settings';
 import {
     InstantSearch,
+    MenuSelect,
+    Menu,
     NumericMenu
   } from 'react-instantsearch-dom';
 import CustomRangeSlider from '../components/RangeSlider';
@@ -87,10 +89,27 @@ function calendar({ doctors, user }) {
                                         </Transition.Child>
                                         <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
                                             <div className="px-4 sm:px-6">
-                                                <Dialog.Title className="text-lg font-medium text-gray-900">Side menu</Dialog.Title>
+                                                <Dialog.Title className="text-xl font-medium text-gray-900">Side menu</Dialog.Title>
                                             </div>
                                             <div className="mt-6 relative flex-1 px-4 sm:px-6">
-                                                <CustomRangeSlider />
+                                                <div className="mt-5">
+                                                    <p className="w-full m-3">Cena:</p>
+                                                    <CustomRangeSlider attribute="price" min={0} max={300}/>
+                                                </div>
+
+                                                <div className="my-16">
+                                                    <p className="w-full m-3">Czas:</p>
+                                                    <CustomRangeSlider  attribute="duration" min={0} max={300}/>
+                                                </div>
+                                                <div className="my-16">
+                                                    <p className="w-full m-3">Wybierz usugę:</p>
+                                                    <MenuSelect attribute="serviceName" />
+                                                </div>
+
+                                                <div className="my-16">
+                                                    <p className="w-full m-3">Wybierz lekarza:</p>
+                                                    <Menu attribute="doctorName" searchable/>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
