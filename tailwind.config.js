@@ -1,6 +1,7 @@
 const colors = require('tailwindcss/colors');
 
 module.exports = {
+    mode: 'jit',
     purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
     darkMode: false,
     theme: {
@@ -19,7 +20,8 @@ module.exports = {
         },
         extend: {
             backgroundImage: () => ({
-                'hero-image': "url('https://images.pexels.com/photos/5214995/pexels-photo-5214995.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260')"
+                // 'hero-image': "url('https://images.pexels.com/photos/5214995/pexels-photo-5214995.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260')"
+                'hero-image': "url('https://ik.imagekit.io/0omc2vwzaz9/pexels-photo-5214995_EEvFa88b6wA.webp')"
             }),
             spacing: {
                 128: '32rem',

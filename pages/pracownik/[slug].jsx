@@ -1,8 +1,10 @@
-import Footer from '../../components/Footer';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import Navbar from '../../components/Navbar';
 import React from 'react';
 import formatDate from '@bitty/format-date';
+
+const Footer = dynamic(import('../../components/Footer'));
+const Navbar = dynamic(import('../../components/Navbar'));
 
 export default function Worker({ doctor }) {
     return (
@@ -17,7 +19,7 @@ export default function Worker({ doctor }) {
             <main className="min-h-screen w-screen max-w-full bg-coolGray-50">
                 <div className="max-w-7xl mx-auto py-36 flex flex-col lg:flex-row lg:space-x-6">
                     <div className="w-full lg:w-1/3">
-                        <img src={doctor.profile.url} className="w-full h-auto object-cover object-center shadow-xl"></img>
+                        <img src={doctor.profile.url} className="w-full h-auto object-cover object-center shadow-xl" alt={doctor.profile.url}></img>
                     </div>
                     <div className="w-full lg:w-2/3 break-words px-4 lg:px-8">
                         <div className="w-full h-full flex flex-col text-center justify-items-center divide-y divide-dashed divide-indigo-500">
@@ -95,6 +97,7 @@ export async function getStaticProps({ params }) {
     return {
         props: {
             doctor
-        } // will be passed to the page component as props
+        },
+        revalidate: 86400
     };
 }

@@ -1,9 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useEffect, useState } from 'react';
-import 'instantsearch.css/themes/satellite.css';
-import Calendar from '../components/Calendar';
-import Footer from '../components/Footer';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
+
 import Navbar from '../components/Navbar';
 import { XIcon } from '@heroicons/react/outline';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
@@ -18,12 +17,14 @@ import {
     Menu,
     NumericMenu
   } from 'react-instantsearch-dom';
+import Calendar from '../components/Calendar';
+import Footer from '../components/Footer';
 import CustomRangeSlider from '../components/RangeSlider';
 
 const fetcher = (url) => request.get(url).then((res) => res.data);
 const searchClient = algoliasearch('VKKCML3WNE', 'c1d5300ee10d2bb9006ad4316e9e9881');
 
-function calendar({ doctors, user }) {
+function calendar({ doctors }) {
     const current = new Date();
     const [open, setOpen] = useState(false);
     const { data, mutate, error } = useSWR(`/appointment`, fetcher);
@@ -139,9 +140,9 @@ export default calendar;
 
 export const getServerSideProps = withPageAuthRequired({
     async getServerSideProps({ params }) {
-      const { client } = require('../graphql/utils');
-      const { doctors } = await client.request(
-          `
+        const { client } = require('../graphql/utils');
+        const { doctors } = await client.request(
+            `
         query MyQuery() {
           doctors {
               id
@@ -167,12 +168,12 @@ export const getServerSideProps = withPageAuthRequired({
               }
         }
       `
-      );
+        );
 
-      return {
-          props: {
-              doctors,
-          }
-      }
-  }
-  });
+        return {
+            props: {
+                doctors
+            }
+        };
+    }
+});
