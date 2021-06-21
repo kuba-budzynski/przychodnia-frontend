@@ -2,101 +2,48 @@ import React, { useEffect, useState } from 'react';
 
 import AppointmentModal from './AppointmentModal';
 import AcceptModal from './AcceptModal';
-import { useAppointmentContext } from '../store/AppointmentContext';
 
 import { createConnector } from 'react-instantsearch-dom';
 
 const connectCalendar = createConnector({
-    displayName: "Calendar",
+    displayName: 'Calendar',
     getProvidedProps(props, searchState) {
-      return {
-        ...props,
-        currentRefinement: searchState.date || null
-      };
+        return {
+            ...props,
+            currentRefinement: searchState.date || null
+        };
     },
 
     refine(props, searchState, nextRefinement) {
-      return {
-        ...searchState,
-        date: nextRefinement
-      };
+        return {
+            ...searchState,
+            date: nextRefinement
+        };
     },
     getSearchParameters(searchParameters, props, searchState) {
         if (searchState.date) {
-
-        const searchDate = new Date(searchState.date);
-        const fromTime = new Date(searchDate.getFullYear(),searchDate.getMonth(), searchDate.getDate(), 0, 0);
-        const toTime = new Date(searchDate.getFullYear(),searchDate.getMonth(), searchDate.getDate() + 1, 0, 0);
-          searchParameters = searchParameters.addNumericRefinement(
-            'date',
-            ">=",
-            fromTime.getTime()
-          )
-          searchParameters = searchParameters.addNumericRefinement(
-            'date',
-            "<",
-            toTime.getTime()
-          )
+            const searchDate = new Date(searchState.date);
+            const fromTime = new Date(searchDate.getFullYear(), searchDate.getMonth(), searchDate.getDate(), 0, 0);
+            const toTime = new Date(searchDate.getFullYear(), searchDate.getMonth(), searchDate.getDate() + 1, 0, 0);
+            searchParameters = searchParameters.addNumericRefinement('date', '>=', fromTime.getTime());
+            searchParameters = searchParameters.addNumericRefinement('date', '<', toTime.getTime());
         }
         return searchParameters;
-      },
-    cleanUp(props, searchState) {
-      const { date, ...rest } = searchState;
-
-      return rest;
     },
-  });
-function WidgetCalendar({month, year, onChangeMonth, onChangeYear, doctorsData, reloadSlots, currentRefinement, refine}) {
-    const { appointment, update } = useAppointmentContext();
+    cleanUp(props, searchState) {
+        const { date, ...rest } = searchState;
+
+        return rest;
+    }
+});
+
+function WidgetCalendar({ month, year, onChangeMonth, onChangeYear, doctorsData, reloadSlots, currentRefinement, refine }) {
     const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const [no_of_days, setNumberOfDays] = useState([]);
     const [blankdays, setBlankdays] = useState([]);
     const [openEventModal, setOpenEventModal] = useState(null);
     const [openPickedAppointmentModal, setOpenPickedAppointmentModal] = useState(null);
-    const themes = [
-        {
-            value: 'blue',
-            label: 'Blue Theme'
-        },
-        {
-            value: 'red',
-            label: 'Red Theme'
-        },
-        {
-            value: 'yellow',
-            label: 'Yellow Theme'
-        },
-        {
-            value: 'green',
-            label: 'Green Theme'
-        },
-        {
-            value: 'purple',
-            label: 'Purple Theme'
-        }
-    ];
-
-    const events = [];
-    // const events = [
-    //     {
-    //         event_date: new Date(2021, 4, 1),
-    //         event_title: "April Fool's Day",
-    //         event_theme: 'blue'
-    //     },
-
-    //     {
-    //         event_date: new Date(2021, 5, 26),
-    //         event_title: 'Birthday',
-    //         event_theme: 'red'
-    //     },
-
-    //     {
-    //         event_date: new Date(2021, 6, 1),
-    //         event_title: 'Upcoming Event',
-    //         event_theme: 'green'
-    //     }
-    // ];
 
     const initDate = () => {
         const today = new Date();
@@ -112,7 +59,6 @@ function WidgetCalendar({month, year, onChangeMonth, onChangeYear, doctorsData, 
 
     const showEventModal = (date) => {
         setOpenEventModal(date);
-        //setEventDate(new Date(year, month, date).toDateString());
     };
 
     const getNoOfDays = (newMonth) => {
@@ -137,8 +83,8 @@ function WidgetCalendar({month, year, onChangeMonth, onChangeYear, doctorsData, 
 
     return (
         <div className="w-full h-full p-0 m-0 relative">
-            <div className="antialiased sans-serif min-h-screen">
-                <div className="mx-auto px-4 py-20 lg:py-32">
+            <div className="antialiased sans-serif">
+                <div className="mx-auto">
                     <div className="relative bg-white rounded-xl shadow-2xl overflow-hidden">
                         <div className="flex items-center justify-between p-4">
                             <div className="space-x-1 ">
@@ -219,7 +165,7 @@ function WidgetCalendar({month, year, onChangeMonth, onChangeYear, doctorsData, 
                                         key={index}
                                         onClick={() => {
                                             showEventModal(date);
-                                            refine(new Date(year, month, date))
+                                            refine(new Date(year, month, date));
                                         }}>
                                         <div
                                             className={`text-sm lg:text-base absolute inset-x-1 bottom-1 w-6 lg:w-8 h-6 lg:h-8 items-center justify-center p-1 text-center leading-none rounded-full transition ease-in-out duration-100 ${
@@ -227,7 +173,7 @@ function WidgetCalendar({month, year, onChangeMonth, onChangeYear, doctorsData, 
                                             }`}>
                                             {date}
                                         </div>
-                                        <div style={{ height: '80px' }} className="overflow-y-auto mt-1">
+                                        {/* <div style={{ height: '80px' }} className="overflow-y-auto mt-1">
                                             {events &&
                                                 events
                                                     .filter(
@@ -246,7 +192,7 @@ function WidgetCalendar({month, year, onChangeMonth, onChangeYear, doctorsData, 
                                                             <p className="text-sm truncate leading-tight">{event.event_title}</p>
                                                         </div>
                                                     ))}
-                                        </div>
+                                        </div> */}
                                     </div>
                                 ))}
                             </div>

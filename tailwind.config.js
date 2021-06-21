@@ -21,7 +21,8 @@ module.exports = {
         extend: {
             backgroundImage: () => ({
                 // 'hero-image': "url('https://images.pexels.com/photos/5214995/pexels-photo-5214995.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260')"
-                'hero-image': "url('https://ik.imagekit.io/0omc2vwzaz9/pexels-photo-5214995_EEvFa88b6wA.webp')"
+                'hero-image': "url('https://ik.imagekit.io/0omc2vwzaz9/pexels-photo-5214995_EEvFa88b6wA.webp')",
+                'hero-landscape': "url('https://ik.imagekit.io/0omc2vwzaz9/aa_wFV2f4fTPGr.webp')"
             }),
             spacing: {
                 128: '32rem',
@@ -45,5 +46,5 @@ module.exports = {
     variants: {
         extend: {}
     },
-    plugins: [require('tailwindcss-textshadow')]
+    plugins: [require('tailwindcss-textshadow'), require('@tailwindcss/line-clamp')]
 };

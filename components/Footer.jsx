@@ -67,7 +67,7 @@ function Footer() {
                                     <a className="text-base leading-6 text-gray-300 hover:text-gray-400">Regulamin</a>
                                 </Link>
                             </li>
-                            <li className="mt-4">
+                            {/* <li className="mt-4">
                                 <Link href="/" prefetch={false}>
                                     <a className="text-base leading-6 text-gray-300 hover:text-gray-400">Link #4</a>
                                 </Link>
@@ -81,7 +81,7 @@ function Footer() {
                                 <Link href="/" prefetch={false}>
                                     <a className="text-base leading-6 text-gray-300 hover:text-gray-400">Link #6</a>
                                 </Link>
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                     <div className="w-3/4 m-0 mt-16 lg:w-1/2 lg:mt-8 xl:mt-0 text-center">

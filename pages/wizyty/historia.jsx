@@ -9,36 +9,34 @@ import star from '../../public/star.svg';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { find } from 'lodash';
 import useSWR from 'swr';
-import { useUser } from '@auth0/nextjs-auth0';
 import request from '../../config/request';
+import SETTINGS from '../../config/settings';
 
 const fetcher = (url) => request.get(url).then((res) => res.data);
 
 const getDoctorData = (doctors, appointment) => {
-
-    return find(doctors, {id: appointment.doctorKey});
-}
+    return find(doctors, { id: appointment.doctorKey });
+};
 
 function historia({ doctors, user }) {
     const [appointments, setAppointments] = useState([]);
     const { data, error } = useSWR(`/appointment/allPast/${user.email}`, fetcher);
     useEffect(() => {
-        if(data) {
-            setAppointments(data.map(e => {
-            const doctor = getDoctorData(doctors, e);
-            const serviceName = find(doctor.uslugiLekarzy, {id: e.details[0].serviceKey}).usluga.nazwa;
-            return(
-                {
-                    id: e.id,
-                    doctorName: `${doctor.title} ${doctor.name} ${doctor.surname}`,
-                    date: new Date(e.date),
-                    doctorImg: doctor.profile.url,
-                    duration: e.details[0].duration,
-                    service: serviceName
-                }
-            )
-            }
-        ));
+        if (data) {
+            setAppointments(
+                data.map((e) => {
+                    const doctor = getDoctorData(doctors, e);
+                    const serviceName = find(doctor.uslugiLekarzy, { id: e.details[0].serviceKey }).usluga.nazwa;
+                    return {
+                        id: e.id,
+                        doctorName: `${doctor.title} ${doctor.name} ${doctor.surname}`,
+                        date: new Date(e.date),
+                        doctorImg: doctor.profile.handle,
+                        duration: e.details[0].duration,
+                        service: serviceName
+                    };
+                })
+            );
         }
     }, [data]);
 
@@ -54,7 +52,7 @@ function historia({ doctors, user }) {
 
             <Navbar />
             <main className={`w-screen max-w-full xl:py-28 xxxl:py-48 min-h-screen xxl:min-h-0 ${patterns.lines2}`}>
-            <div className="box-border w-full mx-auto">
+                <div className="box-border w-full mx-auto">
                     <div class="text-7xl font-extrabold mx-auto w-full mb-8">
                         <h1 class="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-blue-400 uppercase text-center">
                             Historia wizyt
@@ -99,7 +97,11 @@ function historia({ doctors, user }) {
                                                         <td className="px-6 py-4 whitespace-nowrap">
                                                             <div className="flex items-center">
                                                                 <div className="flex-shrink-0 h-10 w-10">
-                                                                    <img className="h-10 w-10 rounded-full" src={appointment.doctorImg} alt={appointment.doctorName} />
+                                                                    <img
+                                                                        className="h-10 w-10 rounded-full"
+                                                                        src={`${SETTINGS.imageKit}/tr:w-200,h-200,fo-face/${appointment.profile.handle}`}
+                                                                        alt={appointment.doctorName}
+                                                                    />
                                                                 </div>
                                                                 <div className="ml-4">
                                                                     <div className="text-sm font-medium text-gray-900">{appointment.doctorName}</div>
@@ -116,8 +118,12 @@ function historia({ doctors, user }) {
                                                             </span>
                                                         </td>
                                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                            <div className="text-sm text-gray-900">{`${appointment.date.toLocaleString().split(',')[0]}`}</div>
-                                                            <div className="text-sm text-indigo-500 font-semibold">{appointment.date.toTimeString().split(' ')[0].slice(0,5)}</div>
+                                                            <div className="text-sm text-gray-900">{`${
+                                                                appointment.date.toLocaleString().split(',')[0]
+                                                            }`}</div>
+                                                            <div className="text-sm text-indigo-500 font-semibold">
+                                                                {appointment.date.toTimeString().split(' ')[0].slice(0, 5)}
+                                                            </div>
                                                         </td>
                                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                             <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -183,10 +189,10 @@ function historia({ doctors, user }) {
 export default historia;
 
 export const getServerSideProps = withPageAuthRequired({
-  async getServerSideProps({ params }) {
-    const { client } = require('../../graphql/utils');
-    const { doctors } = await client.request(
-        `
+    async getServerSideProps({ params }) {
+        const { client } = require('../../graphql/utils');
+        const { doctors } = await client.request(
+            `
       query MyQuery() {
         doctors {
             id
@@ -211,12 +217,12 @@ export const getServerSideProps = withPageAuthRequired({
             }
       }
     `
-    );
+        );
 
-    return {
-        props: {
-            doctors,
-        }
+        return {
+            props: {
+                doctors
+            }
+        };
     }
-}
 });

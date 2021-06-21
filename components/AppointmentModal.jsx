@@ -1,22 +1,19 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
-import { ExclamationIcon } from '@heroicons/react/outline';
-import { Loader } from '../components/utils';
-import  Appointment from '../components/Appointment';
+import Appointment from '../components/Appointment';
 import { find } from 'lodash';
-import fetch from 'unfetch';
-import useSWR from 'swr';
-import {
-    Hits,
-    SearchBox,
-    Pagination,
-  } from 'react-instantsearch-dom';
+import { Hits, SearchBox, Pagination } from 'react-instantsearch-dom';
+import styled from '../styles/scrollbar.module.scss';
 
 function AppointmentModal({ change, setChange, doctorsData, pickAppointment }) {
-
     return (
         <Transition.Root show={change} as={Fragment}>
-            <Dialog as="div" static className="fixed z-10 inset-0 overflow-y-auto" open={change} onClose={() => setChange(null)}>
+            <Dialog
+                as="div"
+                static
+                className="fixed z-10 inset-0 overflow-y-auto min-w-[80vw] lg:min-w-[100rem]"
+                open={change}
+                onClose={() => setChange(null)}>
                 <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                     <Transition.Child
                         as={Fragment}
@@ -42,22 +39,26 @@ function AppointmentModal({ change, setChange, doctorsData, pickAppointment }) {
                         leave="ease-in duration-200"
                         leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                         leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                        <div
-                            className="inline-block bg-white rounded-xl text-left overflow-hidden shadow-2xl transform transition-all align-middle max-w-5xl relative h-full p-6"
-                            style={{ minHeight: '50vh' }}>
-                            <div className="w-full m-3">
-                                <SearchBox />
+                        <div className="inline-block bg-white rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all align-middle max-w-5xl relative h-full px-3 pt-8 pb-2 min-w-[42rem]">
+                            <div className="w-full mx-auto flex justify-items-center justify-center">
+                                <SearchBox className="w-11/12 " />
                             </div>
-                            <ul className="px-4 p-6 pb-4 h-full w-full max-h-80 overflow-y-auto overflow-hidden" >
-                                <Hits hitComponent={({hit}) => <Appointment appointment={{...hit, ...find(doctorsData, {'id': hit.doctorKey})}} key={hit.id}
-                                    onClick={() => {
-                                     setChange(null);
-                                     pickAppointment(hit);
-                                }}/>}
+                            <ul className={`px-7 py-4 h-full w-full max-h-[21rem] overflow-y-auto overflow-hidden ${styled.scrollbar}`}>
+                                <Hits
+                                    hitComponent={({ hit }) => (
+                                        <Appointment
+                                            appointment={{ ...hit, ...find(doctorsData, { id: hit.doctorKey }) }}
+                                            key={hit.id}
+                                            onClick={() => {
+                                                setChange(null);
+                                                pickAppointment(hit);
+                                            }}
+                                        />
+                                    )}
                                 />
                             </ul>
-                            <div className="w-full grid  place-items-center m-3">
-                                <Pagination padding={2}/>
+                            <div className="w-full mx-auto flex justify-items-center justify-center my-1">
+                                <Pagination padding={2} />
                             </div>
                             <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                                 <button

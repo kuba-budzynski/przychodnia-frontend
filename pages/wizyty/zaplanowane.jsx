@@ -12,13 +12,13 @@ import { find } from 'lodash';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import request from '../../config/request';
 import { store } from 'react-notifications-component';
+import SETTINGS from '../../config/settings';
 
 const fetcher = (url) => request.get(url).then((res) => res.data);
 
 const getDoctorData = (doctors, appointment) => {
-
-    return find(doctors, {id: appointment.doctorKey});
-}
+    return find(doctors, { id: appointment.doctorKey });
+};
 function zaplanowane({ doctors, user }) {
     const [appointments, setAppointments] = useState([]);
     const { data, error, mutate } = useSWR(`/appointment/allFuture/${user.email}`, fetcher);
@@ -41,7 +41,7 @@ function zaplanowane({ doctors, user }) {
                         onScreen: true
                     }
                 });
-                mutate()
+                mutate();
             } else {
                 store.addNotification({
                     title: 'Wystąpiły jakieś blędy',
@@ -58,27 +58,26 @@ function zaplanowane({ doctors, user }) {
                 });
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     };
     useEffect(() => {
-        if(data) {
-            console.log(data)
-            setAppointments(data.map(e => {
-            const doctor = getDoctorData(doctors, e);
-            const serviceName = find(doctor.uslugiLekarzy, {id: e.details[0].serviceKey}).usluga.nazwa;
-            return(
-                {
-                    id: e.id,
-                    doctorName: `${doctor.title} ${doctor.name} ${doctor.surname}`,
-                    date: new Date(e.date),
-                    doctorImg: doctor.profile.url,
-                    duration: e.details[0].duration,
-                    service: serviceName
-                }
-            )
-            }
-        ));
+        if (data) {
+            console.log(data);
+            setAppointments(
+                data.map((e) => {
+                    const doctor = getDoctorData(doctors, e);
+                    const serviceName = find(doctor.uslugiLekarzy, { id: e.details[0].serviceKey }).usluga.nazwa;
+                    return {
+                        id: e.id,
+                        doctorName: `${doctor.title} ${doctor.name} ${doctor.surname}`,
+                        date: new Date(e.date),
+                        doctorImg: doctor.profile.handle,
+                        duration: e.details[0].duration,
+                        service: serviceName
+                    };
+                })
+            );
         }
     }, [data]);
 
@@ -134,12 +133,16 @@ function zaplanowane({ doctors, user }) {
                                                 </tr>
                                             </thead>
                                             <tbody className="bg-white divide-y divide-gray-200">
-                                            {appointments.map((appointment) => (
+                                                {appointments.map((appointment) => (
                                                     <tr key={appointment.id}>
                                                         <td className="px-6 py-4 whitespace-nowrap">
                                                             <div className="flex items-center">
                                                                 <div className="flex-shrink-0 h-10 w-10">
-                                                                    <img className="h-10 w-10 rounded-full" src={appointment.doctorImg} alt={appointment.doctorName} />
+                                                                    <img
+                                                                        className="h-10 w-10 rounded-full"
+                                                                        src={`${SETTINGS.imageKit}/tr:w-200,h-200,fo-face/${appointment.doctorImg}`}
+                                                                        alt={appointment.doctorName}
+                                                                    />
                                                                 </div>
                                                                 <div className="ml-4">
                                                                     <div className="text-sm font-medium text-gray-900">{appointment.doctorName}</div>
@@ -156,16 +159,22 @@ function zaplanowane({ doctors, user }) {
                                                             </span>
                                                         </td>
                                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                            <div className="text-sm text-gray-900">{`${appointment.date.toLocaleString().split(',')[0]}`}</div>
-                                                            <div className="text-sm text-indigo-500 font-semibold">{appointment.date.toTimeString().split(' ')[0].slice(0,5)}</div>
+                                                            <div className="text-sm text-gray-900">{`${
+                                                                appointment.date.toLocaleString().split(',')[0]
+                                                            }`}</div>
+                                                            <div className="text-sm text-indigo-500 font-semibold">
+                                                                {appointment.date.toTimeString().split(' ')[0].slice(0, 5)}
+                                                            </div>
                                                         </td>
                                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                            <button className="text-indigo-600 hover:text-indigo-900" onClick={() => onAnuluj(appointment.id)}>
+                                                            <button
+                                                                className="text-indigo-600 hover:text-indigo-900"
+                                                                onClick={() => onAnuluj(appointment.id)}>
                                                                 Anuluj
                                                             </button>
                                                         </td>
                                                     </tr>
-                                            ))}
+                                                ))}
                                             </tbody>
                                         </table>
                                     </div>
@@ -240,14 +249,13 @@ function zaplanowane({ doctors, user }) {
     );
 }
 
-
 export default zaplanowane;
 
 export const getServerSideProps = withPageAuthRequired({
-  async getServerSideProps({ params }) {
-    const { client } = require('../../graphql/utils');
-    const { doctors } = await client.request(
-        `
+    async getServerSideProps({ params }) {
+        const { client } = require('../../graphql/utils');
+        const { doctors } = await client.request(
+            `
       query MyQuery() {
         doctors {
             id
@@ -272,12 +280,12 @@ export const getServerSideProps = withPageAuthRequired({
             }
       }
     `
-    );
+        );
 
-    return {
-        props: {
-            doctors,
-        }
+        return {
+            props: {
+                doctors
+            }
+        };
     }
-}
 });

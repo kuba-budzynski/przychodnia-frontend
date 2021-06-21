@@ -112,18 +112,18 @@ function profile({ user }) {
     return (
         <div className="relative w-screen min-h-screen max-w-full bg-gray-50 flex justify-center justify-items-center flex-col">
             <Navbar />
-            <div className="min-h-screen py-16 w-full max-w-5xl mx-auto px-4">
-                <div className="flex flex-col xl:flex-row xl:space-x-8 my-24 mx-auto justify-center xl:justify-start justify-items-center">
+            <div className="min-h-screen pt-10 w-full max-w-5xl mx-auto px-4 pb-20">
+                <div className="flex flex-col my-24 mx-auto justify-center xl:justify-start justify-items-center">
                     <div className="w-full xl:w-auto bg-cover xl:mx-auto pb-6 xl:pb-0">
                         <img
                             src={user.picture}
-                            className="rounded-full overflow-hidden shadow-xl w-40 h-40 mx-auto xl:mx-0"
+                            className="rounded-full overflow-hidden shadow-xl w-40 h-40 mx-auto xl:mx-0 mb-4"
                             alt={data.email.toString()}
                         />
                     </div>
                     <div className="flex flex-col space-y-2 justify-center  justify-items-center">
-                        <h1 className="text-center xl:text-left text-5xl text-gray-500 font-semibold">Profil użytkownika:</h1>
-                        <h2 className="text-center xl:text-left text-xl text-indigo-400">
+                        <h1 className="text-center text-5xl text-gray-500 font-semibold">Profil użytkownika:</h1>
+                        <h2 className="text-center text-xl text-indigo-400">
                             {data.name && data.surname ? data.name + ' ' + data.surname : user.name ? user.name : user.nickname}
                         </h2>
                         <button
