@@ -4,7 +4,7 @@ function Insurance() {
     return (
         <div className="w-full mx-auto max-w-7xl mt-16 lg:my-16 flex flex-col lg:flex-row">
             <div className="w-full lg:w-1/2 px-8 flex flex-col justify-center justify-items-center">
-                <h3 className="text-indigo-500 leading-tight font-bold tracking-wide text-5xl text-center lg:text-left">
+                <h3 className="text-indigo-500 leading-tight font-bold tracking-wide text-3xl lg:text-5xl text-center lg:text-left">
                     Ubezpieczenie jest dla Ciebie zmartwieniem?
                 </h3>
                 <h4 className="mt-6 text-gray-500 text-2xl">

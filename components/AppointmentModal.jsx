@@ -39,9 +39,9 @@ function AppointmentModal({ change, setChange, doctorsData, pickAppointment }) {
                         leave="ease-in duration-200"
                         leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                         leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                        <div className="inline-block bg-white rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all align-middle max-w-5xl relative h-full px-3 pt-8 pb-2 min-w-[42rem]">
+                        <div className="inline-block bg-white rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all align-middle max-w-5xl relative h-full px-3 pt-8 pb-2 xl:min-w-[42rem]">
                             <div className="w-full mx-auto flex justify-items-center justify-center">
-                                <SearchBox className="w-11/12 " />
+                                <SearchBox className="w-11/12 " autoFocus={false} />
                             </div>
                             <ul className={`px-7 py-4 h-full w-full max-h-[21rem] overflow-y-auto overflow-hidden ${styled.scrollbar}`}>
                                 <Hits
