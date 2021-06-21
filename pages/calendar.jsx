@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
@@ -23,6 +23,7 @@ function calendar({ doctors }) {
         });
     };
 
+    useEffect(refreshSearch, []);
     return (
         <div className="bg-coolGray-50 w-screen max-w-full">
             <Head>
