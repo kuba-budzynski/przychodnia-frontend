@@ -1,5 +1,4 @@
 import React from 'react';
-import doctorsRoom from '../public/doctorRoom.jpg';
 
 function Insurance() {
     return (
@@ -20,7 +19,10 @@ function Insurance() {
                 </ol>
             </div>
             <div className="w-full lg:w-1/2">
-                <img className="w-full h-full object-cover object-center lg:rounded-xl lg:shadow-xl" src={doctorsRoom} alt="doctors room"></img>
+                <img
+                    className="w-full h-full object-cover object-center lg:rounded-xl lg:shadow-xl"
+                    src="https://ik.imagekit.io/0omc2vwzaz9/Webp.net-resizeimage_kNWmhz2aHCZ.webp"
+                    alt="doctors room"></img>
             </div>
         </div>
     );
